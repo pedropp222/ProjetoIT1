@@ -1,7 +1,6 @@
 package view.terminal;
 
 import controller.ListarTipoAtividadeController;
-import model.TipoAtividade;
 
 import java.util.List;
 

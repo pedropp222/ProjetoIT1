@@ -4,7 +4,6 @@ import controller.CriarAtividadeController;
 import model.DiaSemana;
 import view.terminal.util.TerminalUtils;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class CriarAtividadeUI implements Runnable

@@ -12,6 +12,7 @@ public class Main
     {
         Companhia c = new Companhia();
 
+        //TODO: remover isto
         TerminalUtils.criarDadosTeste();
 
         boolean run = true;
@@ -26,61 +27,58 @@ public class Main
             System.out.println("[2] - Criar Tipo Alojamento");
             System.out.println("[3] - Criar Alojamento");
             System.out.println("[4] - Criar Tipo Atividade");
-            System.out.println("[5] - Listar Locais");
-            System.out.println("[6] - Listar Tipos de Alojamento");
-            System.out.println("[7] - Criar Atividade");
-            System.out.println("[8] - Criar Pacote Turismo");
-            System.out.println("[9] - Listar Alojamentos");
-            System.out.println("[10] - Listar Atividades");
-            System.out.println("[11] - Listar Pacotes Turismo");
+            System.out.println("[5] - Criar Atividade");
+            System.out.println("[6] - Criar Pacote Turismo");
+            System.out.println("[7] - Listar Locais");
+            System.out.println("[8] - Listar Tipos de Alojamento");
+            System.out.println("[9] - Listar Tipos de Atividade");
+            System.out.println("[10] - Listar Alojamentos");
+            System.out.println("[11] - Listar Atividades");
+            System.out.println("[12] - Listar Pacotes Turismo");
             int esc = sc.nextInt();
 
             switch (esc)
             {
-                case 0:
-                    run = false;
-                    break;
-                case 1:
+                case 0 -> run = false;
+                case 1 -> {
                     CriarLocalUI cl = new CriarLocalUI();
                     cl.run();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     CriarTipoAlojamentoUI ct = new CriarTipoAlojamentoUI();
                     ct.run();
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     CriarAlojamentoUI cr = new CriarAlojamentoUI();
                     cr.run();
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     CriarTipoAtividadeUI cta = new CriarTipoAtividadeUI();
                     cta.run();
-                    break;
-                case 5:
-                    ListarLocaisUI ll = new ListarLocaisUI();
-                    ll.run();
-                    break;
-                case 6:
-                    ListarTipoAlojamentosUI lt = new ListarTipoAlojamentosUI();
-                    lt.run();
-                    break;
-                case 7:
+                }
+                case 5 -> {
                     CriarAtividadeUI ca = new CriarAtividadeUI();
                     ca.run();
-                    break;
-                case 8:
+                }
+                case 6 -> {
                     CriarPacoteUI criarPacoteUI = new CriarPacoteUI();
                     criarPacoteUI.run();
-                    break;
-                case 9:
-                    TerminalUtils.listarLista(Companhia.getInstance().getListaAlojamentos());
-                    break;
-                case 10:
-                    TerminalUtils.listarLista(Companhia.getInstance().getListaAtividades());
-                    break;
-                case 11:
-                    TerminalUtils.listarLista(Companhia.getInstance().getPacoteTurismos());
-                    break;
+                }
+                case 7 -> {
+                    ListarLocaisUI lc = new ListarLocaisUI();
+                    lc.run();
+                }
+                case 8 -> {
+                    ListarTipoAlojamentosUI la = new ListarTipoAlojamentosUI();
+                    la.run();
+                }
+                case 9 -> {
+                    ListarTipoAtividadeUI la = new ListarTipoAtividadeUI();
+                    la.run();
+                }
+                case 10 -> TerminalUtils.listarLista(c.getListaAlojamentos());
+                case 11 -> TerminalUtils.listarLista(c.getListaAtividades());
+                case 12 -> TerminalUtils.listarLista(c.getPacoteTurismos());
             }
         }
     }
