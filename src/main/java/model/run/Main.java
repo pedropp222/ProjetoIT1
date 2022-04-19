@@ -1,10 +1,12 @@
 package model.run;
 
 import model.Companhia;
+import model.user.UserFunction;
+import model.user.UserRole;
 import view.terminal.*;
 import view.terminal.util.TerminalUtils;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main
 {
@@ -19,67 +21,140 @@ public class Main
 
         Scanner sc = new Scanner(System.in);
 
-        while (run)
+        List<UserFunction> functionList = new ArrayList<>();
+        functionList.add(new UserFunction(UserRole.ADMIN, "Criar Tipo Alojamento", () ->
         {
-            System.out.println("Escolher opcao: ");
-            System.out.println("[0] - Sair");
-            System.out.println("[1] - Criar Local");
-            System.out.println("[2] - Criar Tipo Alojamento");
-            System.out.println("[3] - Criar Alojamento");
-            System.out.println("[4] - Criar Tipo Atividade");
-            System.out.println("[5] - Criar Atividade");
-            System.out.println("[6] - Criar Pacote Turismo");
-            System.out.println("[7] - Listar Locais");
-            System.out.println("[8] - Listar Tipos de Alojamento");
-            System.out.println("[9] - Listar Tipos de Atividade");
-            System.out.println("[10] - Listar Alojamentos");
-            System.out.println("[11] - Listar Atividades");
-            System.out.println("[12] - Listar Pacotes Turismo");
-            int esc = sc.nextInt();
+            CriarTipoAlojamentoUI ct = new CriarTipoAlojamentoUI();
+            ct.run();
+        }));
+        functionList.add(new UserFunction(UserRole.ADMIN, "Criar Tipo Atividade", () ->
+        {
+            CriarTipoAtividadeUI cl = new CriarTipoAtividadeUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.ADMIN, "Listar Tipo Alojamento", () ->
+        {
+            ListarTipoAlojamentosUI cl = new ListarTipoAlojamentosUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.ADMIN, "Listar Tipo Atividades", () ->
+        {
+            ListarTipoAtividadeUI cl = new ListarTipoAtividadeUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.ADMIN, "Criar Local", () ->
+        {
+            CriarLocalUI cl = new CriarLocalUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.ADMIN, "Listar Locais", () ->
+        {
+            ListarLocaisUI cl = new ListarLocaisUI();
+            cl.run();
+        }));
 
-            switch (esc)
+        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Criar Novo Alojamento", () ->
+        {
+            CriarAlojamentoUI cl = new CriarAlojamentoUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Alojamentos", () ->
+        {
+            TerminalUtils.listarLista(c.getListaAlojamentos());
+        }));
+        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Criar Nova Atividade", () ->
+        {
+            CriarAtividadeUI cl = new CriarAtividadeUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Atividades", () ->
+        {
+            TerminalUtils.listarLista(c.getListaAtividades());
+        }));
+
+        functionList.add(new UserFunction(UserRole.CLIENTE, "Criar Pacote de Turismo", () ->
+        {
+            CriarPacoteUI cl = new CriarPacoteUI();
+            cl.run();
+        }));
+        functionList.add(new UserFunction(UserRole.CLIENTE, "Listar Pacotes de Turismo", () ->
+        {
+            TerminalUtils.listarLista(c.getPacoteTurismos());
+        }));
+
+
+        UserRole currentUser = UserRole.CLIENTE;
+        HashMap<Integer, UserFunction> options = createOpcoes(currentUser, functionList);
+
+
+        boolean user = true;
+
+        while (user)
+        {
+            System.out.println("Selecionar User: ");
+            for(UserRole r : UserRole.values())
             {
-                case 0 -> run = false;
-                case 1 -> {
-                    CriarLocalUI cl = new CriarLocalUI();
-                    cl.run();
+                System.out.println("["+(r.ordinal()+1)+"] - "+r);
+            }
+
+            int n = sc.nextInt();
+
+            if (n <= 0 || n > UserRole.values().length)
+            {
+                user=false;
+                run = false;
+            }
+            else
+            {
+                currentUser = UserRole.values()[n-1];
+                options = createOpcoes(currentUser, functionList);
+                run = true;
+            }
+
+            while (run)
+            {
+                System.out.println("Utilizador: " + currentUser);
+                System.out.println("Escolher opcao: ");
+                System.out.println("[0] - Sair");
+                for (Map.Entry<Integer, UserFunction> op : options.entrySet())
+                {
+                    System.out.println("[" + op.getKey() + "] - " + op.getValue().getName());
                 }
-                case 2 -> {
-                    CriarTipoAlojamentoUI ct = new CriarTipoAlojamentoUI();
-                    ct.run();
+
+                int esc = sc.nextInt();
+
+                if (esc == 0)
+                {
+                    run = false;
+                } else
+                {
+                    if (!options.containsKey(esc))
+                    {
+                        System.out.println("Opcao invalida!");
+                    } else
+                    {
+                        options.get(esc).getFunction().run();
+                    }
                 }
-                case 3 -> {
-                    CriarAlojamentoUI cr = new CriarAlojamentoUI();
-                    cr.run();
-                }
-                case 4 -> {
-                    CriarTipoAtividadeUI cta = new CriarTipoAtividadeUI();
-                    cta.run();
-                }
-                case 5 -> {
-                    CriarAtividadeUI ca = new CriarAtividadeUI();
-                    ca.run();
-                }
-                case 6 -> {
-                    CriarPacoteUI criarPacoteUI = new CriarPacoteUI();
-                    criarPacoteUI.run();
-                }
-                case 7 -> {
-                    ListarLocaisUI lc = new ListarLocaisUI();
-                    lc.run();
-                }
-                case 8 -> {
-                    ListarTipoAlojamentosUI la = new ListarTipoAlojamentosUI();
-                    la.run();
-                }
-                case 9 -> {
-                    ListarTipoAtividadeUI la = new ListarTipoAtividadeUI();
-                    la.run();
-                }
-                case 10 -> TerminalUtils.listarLista(c.getListaAlojamentos());
-                case 11 -> TerminalUtils.listarLista(c.getListaAtividades());
-                case 12 -> TerminalUtils.listarLista(c.getPacoteTurismos());
             }
         }
+    }
+
+    public static HashMap<Integer, UserFunction> createOpcoes(UserRole role, List<UserFunction> functions)
+    {
+        int index = 1;
+
+        HashMap<Integer, UserFunction> options = new HashMap<>();
+
+        for (UserFunction f : functions)
+        {
+            if (f.getRole().equals(role))
+            {
+                options.put(index, f);
+                index++;
+            }
+        }
+
+        return options;
     }
 }
