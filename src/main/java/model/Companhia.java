@@ -19,8 +19,10 @@ public class Companhia
 
     private static Companhia instance = null;
 
-    public Companhia(MegaFactory factory)
+    public Companhia(MegaFactory factory) throws IllegalArgumentException
     {
+        if (factory == null) throw new IllegalArgumentException("factory nao pode ser null.");
+
         if (instance == null)
         {
             instance = this;
@@ -169,4 +171,9 @@ public class Companhia
     public List<Atividade> getListaAtividades(){return listaAtividades;}
 
     public List<PacoteTurismo> getPacoteTurismos() {return pacoteTurismos;}
+
+    public static void destroy()
+    {
+        instance = null;
+    }
 }

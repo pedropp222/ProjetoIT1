@@ -21,7 +21,7 @@ public class Cliente
     {
         setNome(nome);
         setEmail(email);
-        this.dataNascimento = dataNascimento;
+        setDataNascimento(dataNascimento);
     }
 
     public String getNome()
@@ -31,7 +31,7 @@ public class Cliente
 
     public void setNome(String nome) throws NomeInvalidoException
     {
-        if (nome.isEmpty()) throw new NomeInvalidoException("Nome invalido.");
+        if (nome == null || nome.isBlank()) throw new NomeInvalidoException("Nome invalido.");
         this.nome = nome;
     }
 
@@ -42,7 +42,7 @@ public class Cliente
 
     public void setEmail(String email) throws NomeInvalidoException
     {
-        if (email.isEmpty()) throw new NomeInvalidoException("Email invalido.");
+        if (email == null || email.isBlank()) throw new NomeInvalidoException("Email invalido.");
         this.email = email;
     }
 
@@ -51,8 +51,9 @@ public class Cliente
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento)
+    public void setDataNascimento(LocalDate dataNascimento) throws IllegalArgumentException
     {
+        if (dataNascimento == null) throw new IllegalArgumentException("Data nascimento nao pode ser null.");
         this.dataNascimento = dataNascimento;
     }
 }
