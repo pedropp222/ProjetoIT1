@@ -1,6 +1,7 @@
 package model.run;
 
 import model.Companhia;
+import model.factories.MegaFactory;
 import model.user.UserFunction;
 import model.user.UserRole;
 import view.terminal.*;
@@ -12,7 +13,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Companhia c = new Companhia();
+        Companhia c = new Companhia(new MegaFactory());
 
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();

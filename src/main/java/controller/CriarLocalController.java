@@ -6,7 +6,7 @@ import model.exception.NomeInvalidoException;
 
 public class CriarLocalController
 {
-    private Companhia companhia;
+    private final Companhia companhia;
     private Local local;
 
     public CriarLocalController()

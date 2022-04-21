@@ -8,7 +8,7 @@ public class TipoAtividade
 {
     private String designacao;
 
-    public TipoAtividade(String designacao)
+    public TipoAtividade(String designacao) throws NomeInvalidoException
     {
         setDesignacao(designacao);
     }
@@ -20,6 +20,7 @@ public class TipoAtividade
 
     public void setDesignacao(String designacao) throws NomeInvalidoException
     {
+        if (designacao == null) throw new NomeInvalidoException("Designacao nao pode ser null.");
         if (designacao.isBlank()) throw new NomeInvalidoException("Designacao nao pode estar vazio.");
         this.designacao = designacao;
     }

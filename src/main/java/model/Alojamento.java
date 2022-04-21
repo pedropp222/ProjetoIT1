@@ -64,7 +64,7 @@ public class Alojamento extends Servico
 
     public void setMinPessoas(int minPessoas) throws IllegalArgumentException
     {
-        if (minPessoas < 0) throw new IllegalArgumentException("Minimo pessoas nao pode ser negativo.");
+        if (minPessoas < 1) throw new IllegalArgumentException("Minimo pessoas nao pode ser inferior a 1.");
         if (minPessoas > this.maxPessoas) throw new IllegalArgumentException("Minimo pessoas nao pode ser superior ao maximo.");
         this.minPessoas = minPessoas;
     }
@@ -76,7 +76,7 @@ public class Alojamento extends Servico
 
     public void setMaxPessoas(int maxPessoas) throws IllegalArgumentException
     {
-        if (maxPessoas < 0) throw new IllegalArgumentException("Maximo pessoas nao pode ser negativo");
+        if (maxPessoas < 1) throw new IllegalArgumentException("Maximo pessoas nao pode ser inferior a 1.");
         if (maxPessoas < this.minPessoas) throw new IllegalArgumentException("Maximo pessoas nao pode ser inferior ao minimo");
         this.maxPessoas = maxPessoas;
     }
@@ -88,6 +88,7 @@ public class Alojamento extends Servico
 
     public void setDiaSemana(DiaSemana diaSemana) throws IllegalArgumentException
     {
+        if (diaSemana == null) throw new IllegalArgumentException("Dia da semana nao pode ser nulo.");
         this.diaSemana = diaSemana;
     }
 

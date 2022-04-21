@@ -27,6 +27,4 @@ public class ListarLocaisUI
             System.out.println("- " + l);
         }
     }
-
-
 }

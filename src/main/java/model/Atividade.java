@@ -32,6 +32,7 @@ public class Atividade extends Servico
 
     public void setDesignacao(String designacao) throws IllegalArgumentException
     {
+        if (designacao == null) throw new IllegalArgumentException("Designacao nao pode ser null.");
         if (designacao.isBlank()) throw new IllegalArgumentException("Designacao nao pode ser vazio.");
         this.designacao = designacao;
     }
@@ -96,8 +97,9 @@ public class Atividade extends Servico
         return diaSemana;
     }
 
-    public void setDiaSemana(DiaSemana diaSemana)
+    public void setDiaSemana(DiaSemana diaSemana) throws IllegalArgumentException
     {
+        if (diaSemana == null) throw new IllegalArgumentException("Dia Semana nao pode ser null.");
         this.diaSemana = diaSemana;
     }
 

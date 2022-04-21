@@ -6,8 +6,9 @@ public class PacoteTurismo
 {
     private final List<Reserva> servicosEscolhidos;
 
-    public PacoteTurismo(List<Reserva> servicosEscolhidos)
+    public PacoteTurismo(List<Reserva> servicosEscolhidos) throws IllegalArgumentException
     {
+        if (servicosEscolhidos == null || servicosEscolhidos.size() == 0) throw new IllegalArgumentException("Lista de servicos nao pode estar vazia.");
         this.servicosEscolhidos = servicosEscolhidos;
     }
 

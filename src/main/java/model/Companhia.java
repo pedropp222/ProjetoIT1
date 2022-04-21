@@ -1,6 +1,7 @@
 package model;
 
 import model.exception.NomeInvalidoException;
+import model.factories.MegaFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,16 @@ public class Companhia
     private List<Atividade> listaAtividades;
     private List<PacoteTurismo> pacoteTurismos;
 
+    private MegaFactory factory;
+
     private static Companhia instance = null;
 
-    public Companhia()
+    public Companhia(MegaFactory factory)
     {
         if (instance == null)
         {
             instance = this;
+            this.factory = factory;
         }
         else return;
 
@@ -34,32 +38,32 @@ public class Companhia
 
     public Local criarLocal(String cidade, String pais, String desc) throws NomeInvalidoException
     {
-        return new Local(cidade,pais,desc);
+        return factory.criarLocal(cidade, pais, desc);
     }
 
     public TipoAlojamento criarTipoAlojamento(String desc) throws NomeInvalidoException
     {
-        return new TipoAlojamento(desc);
+        return factory.criarTipoAlojamento(desc);
     }
 
     public TipoAtividade criarTipoAtividade(String desc) throws NomeInvalidoException
     {
-        return new TipoAtividade(desc);
+        return factory.criarTipoAtividade(desc);
     }
 
     public Alojamento criarAlojamento(String desc, TipoAlojamento tipo, Local l, int min, int max, DiaSemana sem, float prec) throws NomeInvalidoException, IllegalArgumentException
     {
-        return new Alojamento(desc,tipo,l,min,max,sem,prec);
+        return factory.criarAlojamento(desc,tipo,l,min,max,sem,prec);
     }
 
     public Atividade criarAtividade(String designacao, TipoAtividade tipo, Local localPartida, Local localChegada, int horaInicio, int horaFim, DiaSemana diaSemana, float preco) throws IllegalArgumentException
     {
-        return new Atividade(designacao, tipo, localPartida, localChegada, horaInicio, horaFim, diaSemana, preco);
+        return factory.criarAtividade(designacao, tipo, localPartida, localChegada, horaInicio, horaFim, diaSemana, preco);
     }
 
     public PacoteTurismo criarPacoteTurismo(List<Reserva> servicos)
     {
-        return new PacoteTurismo(servicos);
+        return factory.criarPacoteTurismo(servicos);
     }
 
     public boolean gravarLocal(Local x)

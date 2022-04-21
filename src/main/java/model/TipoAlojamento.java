@@ -6,7 +6,7 @@ public class TipoAlojamento
 {
     private String designacao;
 
-    public TipoAlojamento(String designacao)
+    public TipoAlojamento(String designacao) throws NomeInvalidoException
     {
         setDesignacao(designacao);
     }
@@ -18,6 +18,7 @@ public class TipoAlojamento
 
     public void setDesignacao(String designacao) throws NomeInvalidoException
     {
+        if (designacao == null) throw new NomeInvalidoException("Designacao nao pode ser null.");
         if (designacao.isBlank()) throw new NomeInvalidoException("Nome invalido.");
         this.designacao = designacao;
     }

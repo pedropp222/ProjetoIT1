@@ -8,8 +8,9 @@ public class Reserva
     private final LocalDate dataEscolha;
     private final Servico escolha;
 
-    public Reserva(LocalDate dataEscolha, Servico servico)
+    public Reserva(LocalDate dataEscolha, Servico servico) throws IllegalArgumentException
     {
+        if (dataEscolha == null || servico == null) throw new IllegalArgumentException("Campos nao podem ser null.");
         this.dataEscolha = dataEscolha;
         this.escolha = servico;
     }
@@ -27,7 +28,7 @@ public class Reserva
 
         Reserva that = (Reserva) o;
 
-        return Objects.equals(escolha, that.escolha);
+        return Objects.equals(escolha, that.escolha) && dataEscolha.equals(((Reserva) o).dataEscolha);
     }
 
     @Override
