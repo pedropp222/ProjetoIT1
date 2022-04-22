@@ -4,19 +4,44 @@ import model.Companhia;
 import model.factories.MegaFactory;
 import model.user.UserFunction;
 import model.user.UserRole;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import view.terminal.*;
 import view.terminal.util.TerminalUtils;
 
+import java.io.File;
 import java.util.*;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        Companhia c = new Companhia(new MegaFactory());
+        String[] tipoAlojamentoFilters = {};
+        String[] alojamentoFilters = {};
+        String[] alojamentoRangeFilters = {};
+
+        Configurations configs = new Configurations();
+        try
+        {
+            Configuration config = configs.properties(new File("config.properties"));
+
+            // access configuration properties
+            tipoAlojamentoFilters = config.getStringArray("filters.tipoalojamento");
+            alojamentoFilters = config.getStringArray("filters.alojamento");
+            alojamentoRangeFilters = config.getStringArray("filters.alojamento");
+        }
+        catch (ConfigurationException cex)
+        {
+            System.out.println("Erro a carregar ficheiro de configuracao: "+cex.getMessage());
+            return;
+        }
+
+        Companhia c = new Companhia(new MegaFactory(), Arrays.asList(tipoAlojamentoFilters),Arrays.asList(alojamentoFilters),Arrays.asList(alojamentoRangeFilters));
 
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();
+
 
         boolean run = true;
 
@@ -61,7 +86,8 @@ public class Main
         }));
         functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Alojamentos", () ->
         {
-            TerminalUtils.listarLista(c.getListaAlojamentos());
+            ListarAlojamentosUI ui = new ListarAlojamentosUI();
+            ui.run();
         }));
         functionList.add(new UserFunction(UserRole.FORNECEDOR, "Criar Nova Atividade", () ->
         {

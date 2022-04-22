@@ -2,11 +2,10 @@ package controller;
 
 import model.Companhia;
 import model.TipoAlojamento;
+import model.filtering.filter.TipoAlojamentoDenominacaoFilter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class ListarTipoAlojamentosController
 {
@@ -26,7 +25,17 @@ public class ListarTipoAlojamentosController
             lst.add(ta.toString());
         }
 
-
         return lst;
+    }
+
+    public List<TipoAlojamentoDenominacaoFilter> getTipoAlojamentoDenominacaoFilters() {
+        return companhia.getTipoAlojamentoDenominacaoFilters();
+    }
+
+    public List<TipoAlojamento> filtrarDenominacao(TipoAlojamentoDenominacaoFilter filtro, String v)
+    {
+        List<TipoAlojamento> lista = companhia.filtrarTiposAlojamentoDenominacao( filtro, v );
+
+        return lista;
     }
 }

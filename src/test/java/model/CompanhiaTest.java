@@ -17,11 +17,14 @@ import static org.mockito.Mockito.when;
 class CompanhiaTest
 {
     static MegaFactory factoryMock;
+    static List<String> listMock;
 
     @BeforeAll
     public static void setup()
     {
+
         factoryMock = mock(MegaFactory.class);
+        listMock = new ArrayList<>();
     }
 
     @BeforeEach
@@ -33,13 +36,13 @@ class CompanhiaTest
     @Test
     public void shouldCreateCompanhia_validValues()
     {
-        assertDoesNotThrow(()->new Companhia(factoryMock));
+        assertDoesNotThrow(()->new Companhia(factoryMock,listMock,listMock,listMock));
     }
 
     @Test
     public void shouldNotCreateCompanhia_nullValue()
     {
-        assertThrows(IllegalArgumentException.class,()->new Companhia(null));
+        assertThrows(IllegalArgumentException.class,()->new Companhia(null,listMock,listMock,listMock));
     }
 
     @Test
@@ -48,7 +51,7 @@ class CompanhiaTest
         Local localMock = mock(Local.class);
         when(factoryMock.criarLocal("cidade","pais","descricao")).thenReturn(localMock);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         Local local2 = comp.criarLocal("cidade","pais","descricao");
 
@@ -60,7 +63,7 @@ class CompanhiaTest
     {
         when(factoryMock.criarLocal(null,"pais","designacao")).thenThrow(NomeInvalidoException.class);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         assertThrows(NomeInvalidoException.class,()->comp.criarLocal(null,"pais","designacao"));
     }
@@ -71,7 +74,7 @@ class CompanhiaTest
         TipoAtividade atMock = mock(TipoAtividade.class);
         when(factoryMock.criarTipoAtividade("tipo")).thenReturn(atMock);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         TipoAtividade atMock2 = comp.criarTipoAtividade("tipo");
 
@@ -83,7 +86,7 @@ class CompanhiaTest
     {
         when(factoryMock.criarTipoAtividade(null)).thenThrow(NomeInvalidoException.class);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         assertThrows(NomeInvalidoException.class,()->comp.criarTipoAtividade(null));
     }
@@ -94,7 +97,7 @@ class CompanhiaTest
         TipoAlojamento atMock = mock(TipoAlojamento.class);
         when(factoryMock.criarTipoAlojamento("tipo")).thenReturn(atMock);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         TipoAlojamento atMock2 = comp.criarTipoAlojamento("tipo");
 
@@ -106,7 +109,7 @@ class CompanhiaTest
     {
         when(factoryMock.criarTipoAlojamento(null)).thenThrow(NomeInvalidoException.class);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         assertThrows(NomeInvalidoException.class,()->comp.criarTipoAlojamento(null));
     }
@@ -121,7 +124,7 @@ class CompanhiaTest
 
         when(factoryMock.criarAlojamento("desn",tMock,lMock,1,2,DiaSemana.DOMINGO,10f)).thenReturn(alMock);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
 
         Alojamento al2 = comp.criarAlojamento("desn",tMock,lMock,1,2,DiaSemana.DOMINGO,10f);
@@ -138,7 +141,7 @@ class CompanhiaTest
 
         when(factoryMock.criarAlojamento(null,tMock,lMock,1,2,DiaSemana.DOMINGO,10f)).thenThrow(NomeInvalidoException.class);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         assertThrows(NomeInvalidoException.class,()->comp.criarAlojamento(null,tMock,lMock,1,2,DiaSemana.DOMINGO,10f));
     }
@@ -153,7 +156,7 @@ class CompanhiaTest
 
         when(factoryMock.criarAtividade("desn",tMock,lMock,lMock,10,12,DiaSemana.DOMINGO,10f)).thenReturn(atMock);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         Atividade at2 = comp.criarAtividade("desn",tMock,lMock,lMock,10,12,DiaSemana.DOMINGO,10f);
 
@@ -168,7 +171,7 @@ class CompanhiaTest
 
         when(factoryMock.criarAtividade(null,tMock,lMock,lMock,10,12,DiaSemana.DOMINGO,10f)).thenThrow(IllegalArgumentException.class);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         assertThrows(IllegalArgumentException.class,()->comp.criarAtividade(null,tMock,lMock,lMock,10,12,DiaSemana.DOMINGO,10f));
     }
@@ -187,7 +190,7 @@ class CompanhiaTest
 
         when(factoryMock.criarPacoteTurismo(re)).thenReturn(pMock);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         PacoteTurismo p2 = comp.criarPacoteTurismo(re);
 
@@ -199,7 +202,7 @@ class CompanhiaTest
     {
         when(factoryMock.criarPacoteTurismo(null)).thenThrow(IllegalArgumentException.class);
 
-        Companhia comp = new Companhia(factoryMock);
+        Companhia comp = new Companhia(factoryMock,listMock,listMock,listMock);
 
         assertThrows(IllegalArgumentException.class,()->comp.criarPacoteTurismo(null));
     }
