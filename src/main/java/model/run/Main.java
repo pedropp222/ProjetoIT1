@@ -17,27 +17,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        String[] tipoAlojamentoFilters = {};
-        String[] alojamentoFilters = {};
-        String[] alojamentoRangeFilters = {};
-
-        Configurations configs = new Configurations();
-        try
-        {
-            Configuration config = configs.properties(new File("config.properties"));
-
-            // access configuration properties
-            tipoAlojamentoFilters = config.getStringArray("filters.tipoalojamento");
-            alojamentoFilters = config.getStringArray("filters.alojamento");
-            alojamentoRangeFilters = config.getStringArray("filters.alojamento");
-        }
-        catch (ConfigurationException cex)
-        {
-            System.out.println("Erro a carregar ficheiro de configuracao: "+cex.getMessage());
-            return;
-        }
-
-        Companhia c = new Companhia(new MegaFactory(), Arrays.asList(tipoAlojamentoFilters),Arrays.asList(alojamentoFilters),Arrays.asList(alojamentoRangeFilters));
+        Companhia c = new Companhia(new MegaFactory());
 
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();
