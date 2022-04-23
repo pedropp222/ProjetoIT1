@@ -46,13 +46,25 @@ public class TerminalUtils
 
     public static void criarDadosTeste()
     {
-        TipoAtividade t = new TipoAtividade("tipoAtividade 1");
+        TipoAtividade ti1 = new TipoAtividade("tipoAtividade 1");
+        TipoAtividade ti2 = new TipoAtividade("atividade fixe");
+        TipoAtividade ti3 = new TipoAtividade("canoagem");
+        TipoAtividade ti4 = new TipoAtividade("tiro ao alvo");
+        TipoAtividade ti5 = new TipoAtividade("escalada");
+        TipoAtividade ti6 = new TipoAtividade("escavação");
+
         Local l = new Local("porto","portugal","local 1");
         TipoAlojamento t1 = new TipoAlojamento("tipoAlojamento 1");
         TipoAlojamento t2 = new TipoAlojamento("hotel 1");
         TipoAlojamento t3 = new TipoAlojamento("sitio 1");
 
-        Companhia.getInstance().gravarTipoAtividade(t);
+        Companhia.getInstance().gravarTipoAtividade(ti1);
+        Companhia.getInstance().gravarTipoAtividade(ti2);
+        Companhia.getInstance().gravarTipoAtividade(ti3);
+        Companhia.getInstance().gravarTipoAtividade(ti4);
+        Companhia.getInstance().gravarTipoAtividade(ti5);
+        Companhia.getInstance().gravarTipoAtividade(ti6);
+
         Companhia.getInstance().gravarLocal(l);
         Companhia.getInstance().gravarTipoAlojamento(t1);
         Companhia.getInstance().gravarTipoAlojamento(t2);
@@ -69,13 +81,13 @@ public class TerminalUtils
         Companhia.getInstance().gravarAlojamento(new Alojamento("alojamento 8",t3,l,2,8,DiaSemana.SABADO,70f));
 
 
-        Companhia.getInstance().gravarAtividade(new Atividade("at1",t,l,l,5,10,DiaSemana.SEXTA,5f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at2",t,l,l,10,12,DiaSemana.SABADO,15f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at3",t,l,l,6,9,DiaSemana.DOMINGO,20f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at4",t,l,l,12,18,DiaSemana.SABADO,8f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at5",t,l,l,15,17,DiaSemana.SEGUNDA,4f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at5",t,l,l,20,23,DiaSemana.TERCA,9f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at5",t,l,l,7,12,DiaSemana.QUARTA,25f));
-        Companhia.getInstance().gravarAtividade(new Atividade("at5",t,l,l,6,11,DiaSemana.QUINTA,10f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at1",ti1,l,l,5,10,DiaSemana.SEXTA,5f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at2",ti3,l,l,10,12,DiaSemana.SABADO,15f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at3",ti4,l,l,6,9,DiaSemana.DOMINGO,20f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at4",ti3,l,l,12,18,DiaSemana.SABADO,8f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at5",ti1,l,l,15,17,DiaSemana.SEGUNDA,4f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at5",ti6,l,l,20,23,DiaSemana.TERCA,9f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at5",ti2,l,l,7,12,DiaSemana.QUARTA,25f));
+        Companhia.getInstance().gravarAtividade(new Atividade("at5",ti5,l,l,6,11,DiaSemana.QUINTA,10f));
     }
 }

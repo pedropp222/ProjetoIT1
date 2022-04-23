@@ -2,9 +2,13 @@ package model;
 
 import model.exception.NomeInvalidoException;
 import model.factories.MegaFactory;
+import model.filtering.Extractor;
+import model.filtering.Filter;
+import model.filtering.config.FilterEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Companhia
 {
@@ -19,6 +23,7 @@ public class Companhia
 
     private static Companhia instance = null;
 
+    private List<FilterEntry<?,?>> listaFiltros;
 
     public Companhia(MegaFactory factory) throws IllegalArgumentException
     {
@@ -36,6 +41,7 @@ public class Companhia
         listaTipoAtividades = new ArrayList<>();
         listaAtividades = new ArrayList<>();
         pacoteTurismos = new ArrayList<>();
+        listaFiltros = new ArrayList<>();
     }
 
     public Local criarLocal(String cidade, String pais, String desc) throws NomeInvalidoException
@@ -190,6 +196,53 @@ public class Companhia
     public static void destroy()
     {
         instance = null;
+    }
+
+    public <T,F> void addFilter(T objectType, Filter<F> type, Extractor<T,F> method, String text)
+    {
+        listaFiltros.add(new FilterEntry<T,F>(objectType, type, method, text));
+    }
+
+    public <T,F> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F> filter, F filterValue)
+    {
+        List<T> filtered = new ArrayList<>();
+
+        for(T o : listFromType(object))
+        {
+            if (filter.evaluate(extractor.extractValue(o), filterValue))
+            {
+                filtered.add(o);
+            }
+        }
+
+        return filtered;
+    }
+
+    public <T> List<T> listFromType(T type)
+    {
+        if (type instanceof TipoAtividade)
+        {
+            return (List<T>) listaTipoAtividades;
+        }
+
+        return null;
+    }
+
+    public <T> List<FilterEntry<T,?>> getFiltersFor(T type)
+    {
+        List<FilterEntry<T,?>> filters = new ArrayList<>();
+
+        for(FilterEntry<?,?> f : listaFiltros)
+        {
+            //System.out.println("Filtro: "+f.getObjectType().getClass()+" - "+type.getClass());
+
+            if (f.getObjectType().getClass().equals(type.getClass()))
+            {
+                filters.add((FilterEntry<T,?>) f);
+            }
+        }
+
+        return filters;
     }
 
 }

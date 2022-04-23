@@ -1,6 +1,6 @@
 package model.filtering;
 
-public interface Filter
+public interface Filter<V>
 {
-    String getName();
+    boolean evaluate(V value, V filter);
 }
