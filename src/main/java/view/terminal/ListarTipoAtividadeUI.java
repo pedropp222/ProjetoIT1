@@ -4,7 +4,6 @@ import controller.ListarTipoAtividadeController;
 import model.TipoAtividade;
 import model.filtering.Extractor;
 import model.filtering.Filter;
-import model.filtering.classes.StringFilterContains;
 import model.filtering.config.FilterEntry;
 
 import java.util.List;
@@ -52,19 +51,25 @@ public class ListarTipoAtividadeUI implements Runnable
 
                 FilterEntry<TipoAtividade, ?> filter = filtrosDisponiveis.get(escolha - 1);
 
-                System.out.print("Introduza o valor: ");
-
-                String valor = sc.nextLine();
-
-                Extractor<TipoAtividade, String> ext = (Extractor<TipoAtividade, String>) filter.getExtratorMethod();
-                Filter<String> filtro = (Filter<String>) filter.getTipo();
-
-                List<TipoAtividade> filtrado = cnt.filtrar(ext, filtro, valor);
-
-                for (TipoAtividade t : filtrado)
+                if (filter.getFilterClass().getType().equals(String.class))
                 {
-                    System.out.println("- " + t);
+                    System.out.print("Introduza o valor: ");
+
+                    String valor = sc.nextLine();
+
+                    Extractor<TipoAtividade, String> ext = (Extractor<TipoAtividade, String>) filter.getExtratorMethod();
+
+                    Filter<String> filtro = (Filter<String>) filter.getFilterClass();
+
+                    List<TipoAtividade> filtrado = cnt.filtrar(ext, filtro, valor);
+
+                    for (TipoAtividade t : filtrado)
+                    {
+                        System.out.println("- " + t);
+                    }
                 }
+
+
             }
         }
     }

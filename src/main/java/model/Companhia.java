@@ -198,9 +198,14 @@ public class Companhia
         instance = null;
     }
 
-    public <T,F> void addFilter(T objectType, Filter<F> type, Extractor<T,F> method, String text)
+    public <T,F> void addFilter(Class<T> objectType, Filter<F> type, Extractor<T,F> method, String text)
     {
         listaFiltros.add(new FilterEntry<T,F>(objectType, type, method, text));
+    }
+
+    public void addFilter(FilterEntry<?,?> entry)
+    {
+        listaFiltros.add(entry);
     }
 
     public <T,F> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F> filter, F filterValue)
@@ -234,9 +239,7 @@ public class Companhia
 
         for(FilterEntry<?,?> f : listaFiltros)
         {
-            //System.out.println("Filtro: "+f.getObjectType().getClass()+" - "+type.getClass());
-
-            if (f.getObjectType().getClass().equals(type.getClass()))
+            if (f.getObjectType().equals(type.getClass()))
             {
                 filters.add((FilterEntry<T,?>) f);
             }

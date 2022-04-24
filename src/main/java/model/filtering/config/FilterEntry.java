@@ -5,27 +5,27 @@ import model.filtering.Filter;
 
 public class FilterEntry<T,F>
 {
-    private final T objectType;
-    private final Filter<F> tipo;
+    private final Class<T> objectType;
+    private final Filter<F> filterClass;
     private final Extractor<T,F> extratorMethod;
     private final String text;
 
-    public FilterEntry(T objectType, Filter<F> tipo, Extractor<T,F> extratorMethod, String text)
+    public FilterEntry(Class<T> objectType, Filter<F> filterClass, Extractor<T,F> extratorMethod, String text)
     {
         this.objectType = objectType;
-        this.tipo = tipo;
+        this.filterClass = filterClass;
         this.extratorMethod = extratorMethod;
         this.text = text;
     }
 
-    public T getObjectType()
+    public Class<T> getObjectType()
     {
         return objectType;
     }
 
-    public Filter<F> getTipo()
+    public Filter<F> getFilterClass()
     {
-        return tipo;
+        return filterClass;
     }
 
     public Extractor<T, F> getExtratorMethod()

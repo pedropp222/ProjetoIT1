@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ListarTipoAtividadeController
 {
-    Companhia companhia;
-    TipoAtividade refObj;
+    public Companhia companhia;
+    public TipoAtividade refObj;
 
     public ListarTipoAtividadeController()
     {

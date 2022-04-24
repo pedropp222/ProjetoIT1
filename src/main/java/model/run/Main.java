@@ -5,6 +5,8 @@ import model.TipoAlojamento;
 import model.TipoAtividade;
 import model.factories.MegaFactory;
 import model.filtering.classes.StringFilterContains;
+import model.filtering.config.FilterEntry;
+import model.filtering.parse.ConfigParser;
 import model.user.UserFunction;
 import model.user.UserRole;
 import org.apache.commons.configuration2.Configuration;
@@ -25,7 +27,14 @@ public class Main
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();
 
-        c.addFilter(new TipoAtividade("ref"),new StringFilterContains(), TipoAtividade::getDesignacao,"Filtrar denominacao contem");
+        //c.addFilter(new TipoAtividade("ref"),new StringFilterContains(), TipoAtividade::getDesignacao,"Filtrar denominacao contem");
+
+        List<FilterEntry<?,?>> filters = ConfigParser.parseConfig();
+
+        for (FilterEntry<?,?> f : filters)
+        {
+            c.addFilter(f);
+        }
 
         boolean run = true;
 
