@@ -1,6 +1,10 @@
 package view.terminal.util;
 
 import model.*;
+import model.filtering.Extractor;
+import model.filtering.Filter;
+import model.filtering.config.FilterEntry;
+import model.filtering.ui.UIFilter;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -89,5 +93,45 @@ public class TerminalUtils
         Companhia.getInstance().gravarAtividade(new Atividade("at5",ti6,l,l,20,23,DiaSemana.TERCA,9f));
         Companhia.getInstance().gravarAtividade(new Atividade("at5",ti2,l,l,7,12,DiaSemana.QUARTA,25f));
         Companhia.getInstance().gravarAtividade(new Atividade("at5",ti5,l,l,6,11,DiaSemana.QUINTA,10f));
+    }
+
+    public static <T,F> UIFilter popularFilterInfo(List<FilterEntry<T,?>> filtrosDisponiveis)
+    {
+        System.out.println("Filtros disponiveis:");
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("0 - Nenhum filtro");
+        int i = 0;
+        for (FilterEntry<?, ?> filt : filtrosDisponiveis)
+        {
+            i++;
+            System.out.println(i + " - " + filt.getText());
+        }
+
+        System.out.print("Escolha o filtro: ");
+
+        int escolha = sc.nextInt();
+        sc.nextLine();
+
+        if (escolha > 0 && escolha <= filtrosDisponiveis.size())
+        {
+            FilterEntry<T, ?> filter = filtrosDisponiveis.get(escolha - 1);
+
+            if (filter.getFilterClass().getType().equals(String.class))
+            {
+                System.out.print("Introduza o valor: ");
+
+                String valor = sc.nextLine();
+
+                Extractor<T, F> ext = (Extractor<T, F>) filter.getExtratorMethod();
+
+                Filter<F> filtro = (Filter<F>) filter.getFilterClass();
+
+                return new UIFilter(valor,ext,filtro);
+            }
+        }
+
+        return null;
     }
 }
