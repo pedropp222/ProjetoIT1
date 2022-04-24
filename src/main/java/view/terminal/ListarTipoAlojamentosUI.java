@@ -2,6 +2,10 @@ package view.terminal;
 
 import controller.ListarTipoAlojamentosController;
 import model.TipoAlojamento;
+import model.TipoAtividade;
+import model.filtering.config.FilterEntry;
+import model.filtering.ui.UIFilter;
+import view.terminal.util.TerminalUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +30,25 @@ public class ListarTipoAlojamentosUI
         }
         else
         {
-            Scanner sc = new Scanner(System.in);
+            List<FilterEntry<TipoAlojamento, ?>> filtrosDisponiveis = contr.getFiltros();
 
-            System.out.println("Valor a filtrar: ");
-            String v = sc.nextLine();
+            UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 
-            List<TipoAlojamento> listaTipoAlojamento = new ArrayList<>();
+            if (f != null)
+            {
+                List<TipoAlojamento> filtrado = contr.filtrar(f.getExt(), f.getFiltro(), f.getValor());
 
-            System.out.println("\nLista de Tipo de Alojamento filtrada:\n");
-            for (TipoAlojamento ta : listaTipoAlojamento) {
-                System.out.println(ta.toString() + "\n");
+                for (TipoAlojamento t : filtrado)
+                {
+                    System.out.println("- " + t);
+                }
+            }
+            else
+            {
+                for (String t : lista)
+                {
+                    System.out.println("- " + t);
+                }
             }
         }
     }

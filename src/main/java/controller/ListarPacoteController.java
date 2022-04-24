@@ -1,8 +1,8 @@
 package controller;
 
-import model.Alojamento;
 import model.Companhia;
 import model.Local;
+import model.PacoteTurismo;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
@@ -10,41 +10,40 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarAlojamentosController
+public class ListarPacoteController
 {
     private final Companhia companhia;
 
-    private Alojamento refObj;
+    private PacoteTurismo refObj;
 
-    public ListarAlojamentosController()
+    public ListarPacoteController()
     {
         companhia = Companhia.getInstance();
-        if (companhia.getListaAlojamentos().size() != 0)
+        if (companhia.getPacoteTurismos().size() != 0)
         {
-            refObj = companhia.getListaAlojamentos().get(0);
+            refObj = companhia.getPacoteTurismos().get(0);
         }
     }
 
-    public List<String> getAlojamentos()
+    public List<String> getLocais()
     {
         List<String> lst = new ArrayList<>();
 
-        for(Alojamento ta : companhia.getListaAlojamentos())
+        for(PacoteTurismo l : companhia.getPacoteTurismos())
         {
-            lst.add(ta.toString());
+            lst.add(l.toString());
         }
 
         return lst;
     }
 
-    public <F> List<Alojamento> filtrar(Extractor<Alojamento,F> extractor, Filter<F> filtro, F valor)
+    public <F> List<PacoteTurismo> filtrar(Extractor<PacoteTurismo,F> extractor, Filter<F> filtro, F valor)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor);
     }
 
-    public List<FilterEntry<Alojamento,?>> getFiltros()
+    public List<FilterEntry<PacoteTurismo,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
     }
-
 }

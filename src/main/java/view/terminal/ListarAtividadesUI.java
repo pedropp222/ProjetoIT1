@@ -1,37 +1,35 @@
 package view.terminal;
 
-import controller.ListarAlojamentosController;
+import controller.ListarAtividadesController;
 import model.Alojamento;
-import model.TipoAlojamento;
+import model.Atividade;
 import model.filtering.config.FilterEntry;
 import model.filtering.ui.UIFilter;
 import view.terminal.util.TerminalUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class ListarAlojamentosUI implements Runnable
+public class ListarAtividadesUI implements Runnable
 {
-    ListarAlojamentosController contr;
+    ListarAtividadesController contr;
 
-    public ListarAlojamentosUI()
+    public ListarAtividadesUI()
     {
-        contr = new ListarAlojamentosController();
+        contr = new ListarAtividadesController();
     }
 
     @Override
     public void run()
     {
-        List<String> lista = contr.getAlojamentos();
+        List<String> lista = contr.getAtividades();
 
         if (lista.size() == 0)
         {
-            System.out.println("Nao existem tipos de alojamento registados.");
+            System.out.println("Nao existem atividades registadas.");
         }
         else
         {
-            List<FilterEntry<Alojamento, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<Atividade, ?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

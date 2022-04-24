@@ -1,21 +1,22 @@
 package view.terminal;
 
 import controller.ListarLocaisController;
+import controller.ListarPacoteController;
 import model.Local;
-import model.TipoAlojamento;
+import model.PacoteTurismo;
 import model.filtering.config.FilterEntry;
 import model.filtering.ui.UIFilter;
 import view.terminal.util.TerminalUtils;
 
 import java.util.List;
 
-public class ListarLocaisUI
+public class ListarPacoteTurismoUI
 {
-    private final ListarLocaisController contr;
+    private final ListarPacoteController contr;
 
-    public ListarLocaisUI()
+    public ListarPacoteTurismoUI()
     {
-        contr = new ListarLocaisController();
+        contr = new ListarPacoteController();
     }
 
     public void run()
@@ -24,19 +25,19 @@ public class ListarLocaisUI
 
         if (locais.size() == 0)
         {
-            System.out.println("Nao existem locais registados.");
+            System.out.println("Nao existem pacotes de turismo registados.");
         }
         else
         {
-            List<FilterEntry<Local, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<PacoteTurismo, ?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 
             if (f != null)
             {
-                List<Local> filtrado = contr.filtrar(f.getExt(), f.getFiltro(), f.getValor());
+                List<PacoteTurismo> filtrado = contr.filtrar(f.getExt(), f.getFiltro(), f.getValor());
 
-                for (Local t : filtrado)
+                for (PacoteTurismo t : filtrado)
                 {
                     System.out.println("- " + t);
                 }

@@ -89,7 +89,8 @@ public class Main
         }));
         functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Atividades", () ->
         {
-            TerminalUtils.listarLista(c.getListaAtividades());
+            ListarAtividadesUI ui = new ListarAtividadesUI();
+            ui.run();
         }));
 
         functionList.add(new UserFunction(UserRole.CLIENTE, "Criar Pacote de Turismo", () ->
@@ -99,7 +100,8 @@ public class Main
         }));
         functionList.add(new UserFunction(UserRole.CLIENTE, "Listar Pacotes de Turismo", () ->
         {
-            TerminalUtils.listarLista(c.getPacoteTurismos());
+            ListarPacoteTurismoUI cl = new ListarPacoteTurismoUI();
+            cl.run();
         }));
 
 

@@ -124,11 +124,11 @@ public class TerminalUtils
 
                 String valor = sc.nextLine();
 
-                Extractor<T, F> ext = (Extractor<T, F>) filter.getExtratorMethod();
+                Extractor<T, String> ext = (Extractor<T, String>) filter.getExtratorMethod();
 
-                Filter<F> filtro = (Filter<F>) filter.getFilterClass();
+                Filter<String> filtro = (Filter<String>) filter.getFilterClass();
 
-                return new UIFilter(valor,ext,filtro);
+                return new UIFilter<T, String>(valor,ext,filtro);
             }
         }
 

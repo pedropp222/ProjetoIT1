@@ -229,6 +229,26 @@ public class Companhia
         {
             return (List<T>) listaTipoAtividades;
         }
+        else if (type instanceof TipoAlojamento)
+        {
+            return (List<T>) listaTipoAlojamentos;
+        }
+        else if (type instanceof Alojamento)
+        {
+            return (List<T>) listaAlojamentos;
+        }
+        else if (type instanceof Atividade)
+        {
+            return (List<T>) listaAtividades;
+        }
+        else if (type instanceof Local)
+        {
+            return (List<T>) listaLocais;
+        }
+        else if (type instanceof PacoteTurismo)
+        {
+            return (List<T>) pacoteTurismos;
+        }
 
         return null;
     }
