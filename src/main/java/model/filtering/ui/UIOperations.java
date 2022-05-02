@@ -16,7 +16,7 @@ public class UIOperations
 
         if (f != null)
         {
-            List<T> filtrado = contr.filtrar(f.getExt(), f.getFiltro(), f.getValor());
+            List<T> filtrado = contr.filtrar(f.getExt(), f.getFiltro(), f.getValor(),f.isNegate());
 
             for (T t : filtrado)
             {

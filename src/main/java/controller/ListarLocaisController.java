@@ -2,7 +2,6 @@ package controller;
 
 import model.Companhia;
 import model.Local;
-import model.TipoAtividade;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
@@ -37,9 +36,9 @@ public class ListarLocaisController implements Filterable<Local>
         return lst;
     }
 
-    public <F,F2> List<Local> filtrar(Extractor<Local,F> extractor, Filter<F,F2> filtro, F2 valor)
+    public <F,F2> List<Local> filtrar(Extractor<Local,F> extractor, Filter<F,F2> filtro, F2 valor, boolean negate)
     {
-        return companhia.evaluateFilter(refObj,extractor,filtro,valor);
+        return companhia.evaluateFilter(refObj,extractor,filtro,valor,negate);
     }
 
     public List<FilterEntry<Local,?,?>> getFiltros()

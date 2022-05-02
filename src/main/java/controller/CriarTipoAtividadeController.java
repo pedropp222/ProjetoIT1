@@ -5,8 +5,8 @@ import model.TipoAtividade;
 
 public class CriarTipoAtividadeController
 {
-    Companhia companhia;
-    TipoAtividade at;
+    private final Companhia companhia;
+    private TipoAtividade at;
 
     public CriarTipoAtividadeController()
     {
@@ -17,12 +17,7 @@ public class CriarTipoAtividadeController
     {
         at = companhia.criarTipoAtividade(den);
 
-        if (!companhia.validarTipoAtividade(at))
-        {
-            return false;
-        }
-
-        return true;
+        return companhia.validarTipoAtividade(at);
     }
 
     public boolean gravarTipoAtividade()

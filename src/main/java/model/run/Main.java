@@ -1,21 +1,14 @@
 package model.run;
 
 import model.Companhia;
-import model.TipoAlojamento;
-import model.TipoAtividade;
 import model.factories.MegaFactory;
-import model.filtering.classes.StringFilterContains;
 import model.filtering.config.FilterEntry;
 import model.filtering.parse.ConfigParser;
 import model.user.UserFunction;
 import model.user.UserRole;
-import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import view.terminal.*;
 import view.terminal.util.TerminalUtils;
 
-import java.io.File;
 import java.util.*;
 
 public class Main
@@ -36,7 +29,7 @@ public class Main
             c.addFilter(f);
         }
 
-        boolean run = true;
+        boolean run;
 
         Scanner sc = new Scanner(System.in);
 

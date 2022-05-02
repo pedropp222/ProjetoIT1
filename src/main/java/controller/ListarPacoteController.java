@@ -1,7 +1,6 @@
 package controller;
 
 import model.Companhia;
-import model.Local;
 import model.PacoteTurismo;
 import model.filtering.Extractor;
 import model.filtering.Filter;
@@ -37,9 +36,9 @@ public class ListarPacoteController implements Filterable<PacoteTurismo>
         return lst;
     }
 
-    public <F,F2> List<PacoteTurismo> filtrar(Extractor<PacoteTurismo,F> extractor, Filter<F,F2> filtro, F2 valor)
+    public <F,F2> List<PacoteTurismo> filtrar(Extractor<PacoteTurismo,F> extractor, Filter<F,F2> filtro, F2 valor,boolean negate)
     {
-        return companhia.evaluateFilter(refObj,extractor,filtro,valor);
+        return companhia.evaluateFilter(refObj,extractor,filtro,valor,negate);
     }
 
     public List<FilterEntry<PacoteTurismo,?,?>> getFiltros()

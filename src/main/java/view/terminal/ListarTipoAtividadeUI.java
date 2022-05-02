@@ -1,16 +1,9 @@
 package view.terminal;
 
 import controller.ListarTipoAtividadeController;
-import model.TipoAtividade;
-import model.filtering.Extractor;
-import model.filtering.Filter;
-import model.filtering.config.FilterEntry;
-import model.filtering.ui.UIFilter;
 import model.filtering.ui.UIOperations;
-import view.terminal.util.TerminalUtils;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class ListarTipoAtividadeUI implements Runnable
 {

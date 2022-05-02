@@ -1,12 +1,7 @@
 package view.terminal;
 
 import controller.ListarAtividadesController;
-import model.Alojamento;
-import model.Atividade;
-import model.filtering.config.FilterEntry;
-import model.filtering.ui.UIFilter;
 import model.filtering.ui.UIOperations;
-import view.terminal.util.TerminalUtils;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package model.filtering.parse;
 
-import model.TipoAlojamento;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
@@ -56,7 +55,7 @@ public class ConfigParser
                                 if (debug) System.out.println("Filter created");
 
                                 //create extractor lambda expression using clazz method
-                                Extractor<?, ?> ext = (Extractor<?, ?>) (Object o) ->
+                                Extractor<?, ?> ext = (Object o) ->
                                 {
                                     try
                                     {

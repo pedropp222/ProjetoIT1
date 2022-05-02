@@ -5,7 +5,6 @@ import model.DiaSemana;
 import model.exception.NomeInvalidoException;
 import view.terminal.util.TerminalUtils;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class CriarAlojamentoUI implements Runnable

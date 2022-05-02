@@ -1,13 +1,7 @@
 package view.terminal;
 
-import controller.ListarLocaisController;
 import controller.ListarPacoteController;
-import model.Local;
-import model.PacoteTurismo;
-import model.filtering.config.FilterEntry;
-import model.filtering.ui.UIFilter;
 import model.filtering.ui.UIOperations;
-import view.terminal.util.TerminalUtils;
 
 import java.util.List;
 

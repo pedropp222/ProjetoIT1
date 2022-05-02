@@ -8,7 +8,6 @@ import model.filtering.config.FilterEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class Companhia
 {
@@ -208,13 +207,13 @@ public class Companhia
         listaFiltros.add(entry);
     }
 
-    public <T,F,F2> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F,F2> filter, F2 filterValue)
+    public <T,F,F2> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F,F2> filter, F2 filterValue,boolean negate)
     {
         List<T> filtered = new ArrayList<>();
 
         for(T o : listFromType(object))
         {
-            if (filter.evaluate(extractor.extractValue(o), filterValue))
+            if (filter.evaluate(extractor.extractValue(o), filterValue) == !negate)
             {
                 filtered.add(o);
             }

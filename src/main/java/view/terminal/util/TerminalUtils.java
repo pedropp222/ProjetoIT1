@@ -98,7 +98,8 @@ public class TerminalUtils
 
     public static <T,F,F2> UIFilter popularFilterInfo(List<FilterEntry<T,?,?>> filtrosDisponiveis)
     {
-        System.out.println("Filtros disponiveis:");
+        System.out.println("Selecione um dos Filtros disponiveis.");
+        System.out.println("Escreva ! antes da escolha para inverter o filtro.");
 
         Scanner sc = new Scanner(System.in);
 
@@ -112,8 +113,19 @@ public class TerminalUtils
 
         System.out.print("Escolha o filtro: ");
 
-        int escolha = sc.nextInt();
-        sc.nextLine();
+        boolean negateFilter = false;
+        int escolha = 0;
+
+        String esc = sc.nextLine().trim();
+        if (esc.startsWith("!"))
+        {
+            negateFilter = true;
+            escolha = Integer.parseInt(esc.substring(1));
+        }
+        else
+        {
+            escolha = Integer.parseInt(esc);
+        }
 
         if (escolha > 0 && escolha <= filtrosDisponiveis.size())
         {
@@ -121,18 +133,18 @@ public class TerminalUtils
 
             if (filter.getFilterClass().getType().equals(filter.getFilterClass().getSecondType()))
             {
-                return simpleFilter(filter);
+                return simpleFilter(filter,negateFilter);
             }
             else
             {
-                return advancedFilter(filter);
+                return advancedFilter(filter,negateFilter);
             }
         }
 
         return null;
     }
 
-    private static <T,F,F2> UIFilter<T,F,F2> advancedFilter(FilterEntry<T,?,?> filter)
+    private static <T,F,F2> UIFilter<T,F,F2> advancedFilter(FilterEntry<T,?,?> filter, boolean negate)
     {
         Scanner sc = new Scanner(System.in);
         if (filter.getFilterClass().getSecondType().equals(Pair.class))
@@ -145,7 +157,7 @@ public class TerminalUtils
             Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
             Filter<Integer, Pair<Integer>> filtro = (Filter<Integer, Pair<Integer>>) filter.getFilterClass();
 
-            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Pair<Integer>>(new Pair<Integer>(min,max), ext, filtro);
+            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Pair<Integer>>(new Pair<Integer>(min,max), ext, filtro,negate);
         }
         else
         {
@@ -155,7 +167,7 @@ public class TerminalUtils
         return null;
     }
 
-    private static <T,F,F2> UIFilter<T,F,F2> simpleFilter(FilterEntry<T, ?,?> filter)
+    private static <T,F,F2> UIFilter<T,F,F2> simpleFilter(FilterEntry<T, ?,?> filter, boolean negate)
     {
         Scanner sc = new Scanner(System.in);
         if (filter.getFilterClass().getType().equals(Float.class))
@@ -167,7 +179,7 @@ public class TerminalUtils
             Extractor<T, Float> ext = (Extractor<T, Float>) filter.getExtratorMethod();
             Filter<Float, Float> filtro = (Filter<Float, Float>) filter.getFilterClass();
 
-            return (UIFilter<T, F, F2>) new UIFilter<T, Float, Float>(valor, ext, filtro);
+            return (UIFilter<T, F, F2>) new UIFilter<T, Float, Float>(valor, ext, filtro,negate);
         }
         else if (filter.getFilterClass().getType().equals(Integer.class))
         {
@@ -178,7 +190,7 @@ public class TerminalUtils
             Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
             Filter<Integer, Integer> filtro = (Filter<Integer, Integer>) filter.getFilterClass();
 
-            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Integer>(valor, ext, filtro);
+            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Integer>(valor, ext, filtro,negate);
         }
         else if (filter.getFilterClass().getType().equals(String.class))
         {
@@ -189,7 +201,7 @@ public class TerminalUtils
             Extractor<T, String> ext = (Extractor<T, String>) filter.getExtratorMethod();
             Filter<String, String> filtro = (Filter<String, String>) filter.getFilterClass();
 
-            return (UIFilter<T, F, F2>) new UIFilter<T, String, String>(valor, ext, filtro);
+            return (UIFilter<T, F, F2>) new UIFilter<T, String, String>(valor, ext, filtro,negate);
         }
         else
         {

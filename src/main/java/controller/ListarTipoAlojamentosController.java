@@ -36,9 +36,9 @@ public class ListarTipoAlojamentosController implements Filterable<TipoAlojament
         return lst;
     }
 
-    public <F,F2> List<TipoAlojamento> filtrar(Extractor<TipoAlojamento,F> extractor, Filter<F,F2> filtro, F2 valor)
+    public <F,F2> List<TipoAlojamento> filtrar(Extractor<TipoAlojamento,F> extractor, Filter<F,F2> filtro, F2 valor, boolean negate)
     {
-        return companhia.evaluateFilter(refObj,extractor,filtro,valor);
+        return companhia.evaluateFilter(refObj,extractor,filtro,valor,negate);
     }
 
     public List<FilterEntry<TipoAlojamento,?,?>> getFiltros()

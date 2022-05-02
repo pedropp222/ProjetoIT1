@@ -1,16 +1,9 @@
 package view.terminal;
 
 import controller.ListarAlojamentosController;
-import model.Alojamento;
-import model.TipoAlojamento;
-import model.filtering.config.FilterEntry;
-import model.filtering.ui.UIFilter;
 import model.filtering.ui.UIOperations;
-import view.terminal.util.TerminalUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ListarAlojamentosUI implements Runnable
 {

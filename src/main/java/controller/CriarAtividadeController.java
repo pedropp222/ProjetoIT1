@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CriarAtividadeController
 {
-    Companhia companhia;
-    Atividade atividade;
+    private final Companhia companhia;
+    private Atividade atividade;
 
     public CriarAtividadeController()
     {
@@ -19,12 +19,7 @@ public class CriarAtividadeController
     {
         atividade = companhia.criarAtividade(designacao, companhia.getListaTipoAtividade().get(tipo), companhia.getListaLocais().get(localPartida), companhia.getListaLocais().get(localChegada), horaInicio, horaFim, diaSemana, preco);
 
-        if (!companhia.validarAtividade(atividade))
-        {
-            return false;
-        }
-
-        return true;
+        return companhia.validarAtividade(atividade);
     }
 
     public List<String> getTiposAtividade()

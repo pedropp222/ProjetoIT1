@@ -11,11 +11,14 @@ public class UIFilter<T,F,F2>
 
     private final Filter<F,F2> filtro;
 
-    public UIFilter(F2 valor, Extractor<T, F> ext, Filter<F,F2> filtro)
+    private final boolean negate;
+
+    public UIFilter(F2 valor, Extractor<T, F> ext, Filter<F,F2> filtro, boolean negate)
     {
         this.valor = valor;
         this.ext = ext;
         this.filtro = filtro;
+        this.negate = negate;
     }
 
     public F2 getValor()
@@ -31,5 +34,10 @@ public class UIFilter<T,F,F2>
     public Filter<F,F2> getFiltro()
     {
         return filtro;
+    }
+
+    public boolean isNegate()
+    {
+        return negate;
     }
 }
