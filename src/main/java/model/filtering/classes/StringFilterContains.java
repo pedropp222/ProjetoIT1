@@ -19,6 +19,7 @@ public class StringFilterContains implements Filter<String,String>
     @Override
     public boolean evaluate(String value, String filter)
     {
+        if (filter.isEmpty()) return false;
         return value.contains(filter);
     }
 }

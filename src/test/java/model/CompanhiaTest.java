@@ -1,8 +1,8 @@
 package model;
 
 import model.exception.NomeInvalidoException;
-import model.factories.CreateLocalFactory;
 import model.factories.MegaFactory;
+import model.filtering.config.FilterEntry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,6 @@ class CompanhiaTest
     @BeforeAll
     public static void setup()
     {
-
         factoryMock = mock(MegaFactory.class);
         listMock = new ArrayList<>();
     }

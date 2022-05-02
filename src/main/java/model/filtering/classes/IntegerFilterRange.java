@@ -15,7 +15,7 @@ public class IntegerFilterRange implements Filter<Integer, Pair<Integer>>
     @Override
     public Class<Pair<Integer>> getSecondType()
     {
-        return (Class<Pair<Integer>>) new Pair<Integer>(0,0).getClass();
+        return (Class<Pair<Integer>>) new Pair<Integer>(0,1).getClass();
     }
 
     @Override

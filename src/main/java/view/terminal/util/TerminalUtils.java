@@ -154,10 +154,10 @@ public class TerminalUtils
             System.out.println("Introduza o maximo:");
             int max = sc.nextInt();
 
-            Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
-            Filter<Integer, Pair<Integer>> filtro = (Filter<Integer, Pair<Integer>>) filter.getFilterClass();
+            Extractor<T, ?> ext = filter.getExtratorMethod();
+            Filter<?, ?> filtro = filter.getFilterClass();
 
-            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Pair<Integer>>(new Pair<Integer>(min,max), ext, filtro,negate);
+            return new UIFilter(new Pair<Integer>(min,max), ext, filtro,negate);
         }
         else
         {
