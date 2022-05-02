@@ -130,6 +130,30 @@ public class TerminalUtils
 
                 return new UIFilter<T, String>(valor,ext,filtro);
             }
+            else if (filter.getFilterClass().getType().equals(Integer.class))
+            {
+                System.out.print("Introduza o numero: ");
+
+                int valor = sc.nextInt();
+
+                Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
+
+                Filter<Integer> filtro = (Filter<Integer>) filter.getFilterClass();
+
+                return new UIFilter<T, Integer>(valor,ext,filtro);
+            }
+            else if (filter.getFilterClass().getType().equals(Float.class))
+            {
+                System.out.print("Introduza o numero: ");
+
+                float valor = sc.nextFloat();
+
+                Extractor<T, Float> ext = (Extractor<T, Float>) filter.getExtratorMethod();
+
+                Filter<Float> filtro = (Filter<Float>) filter.getFilterClass();
+
+                return new UIFilter<T, Float>(valor,ext,filtro);
+            }
         }
 
         return null;
