@@ -2,7 +2,7 @@ package model.filtering.classes;
 
 import model.filtering.Filter;
 
-public class StringFilterContains implements Filter<String,String>
+public class StringFilterEquals implements Filter<String, String>
 {
     @Override
     public Class<String> getType()
@@ -19,12 +19,10 @@ public class StringFilterContains implements Filter<String,String>
     @Override
     public boolean evaluate(String value, String filter)
     {
-        if (filter.isEmpty()) return false;
         if (filter.startsWith("#"))
         {
-            filter = filter.substring(1).toUpperCase();
-            return value.toUpperCase().contains(filter);
+            return value.equalsIgnoreCase(filter.substring(1));
         }
-        return value.contains(filter);
+        return value.equals(filter);
     }
 }

@@ -1,11 +1,11 @@
 package model.filtering.config;
 
-public class Pair<T extends Comparable<T>>
+public class Range<T extends Comparable<T>>
 {
     private final T first;
     private final T second;
 
-    public Pair(T first, T second) throws IllegalArgumentException
+    public Range(T first, T second) throws IllegalArgumentException
     {
         if (first.compareTo(second) >= 0)
         {

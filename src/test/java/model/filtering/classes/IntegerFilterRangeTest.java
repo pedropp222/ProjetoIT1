@@ -1,6 +1,6 @@
 package model.filtering.classes;
 
-import model.filtering.config.Pair;
+import model.filtering.config.Range;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +12,7 @@ class IntegerFilterRangeTest
     {
         IntegerFilterRange ir = new IntegerFilterRange();
 
-        assertTrue(ir.evaluate(10,new Pair<>(5,15)));
+        assertTrue(ir.evaluate(10,new Range<>(5,15)));
     }
 
     @Test
@@ -20,7 +20,7 @@ class IntegerFilterRangeTest
     {
         IntegerFilterRange ir = new IntegerFilterRange();
 
-        assertFalse(ir.evaluate(10,new Pair<>(20,50)));
+        assertFalse(ir.evaluate(10,new Range<>(20,50)));
     }
 
     @Test
@@ -28,7 +28,7 @@ class IntegerFilterRangeTest
     {
         IntegerFilterRange ir = new IntegerFilterRange();
 
-        assertFalse(ir.evaluate(50,new Pair<>(10,30)));
+        assertFalse(ir.evaluate(50,new Range<>(10,30)));
     }
 
 }

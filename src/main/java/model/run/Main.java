@@ -3,7 +3,13 @@ package model.run;
 import model.Companhia;
 import model.factories.MegaFactory;
 import model.filtering.config.FilterEntry;
+import model.filtering.config.Range;
 import model.filtering.parse.ConfigParser;
+import model.filtering.ui.UIOperations;
+import model.filtering.ui.classes.FloatUI;
+import model.filtering.ui.classes.IntegerRangeUI;
+import model.filtering.ui.classes.IntegerUI;
+import model.filtering.ui.classes.StringUI;
 import model.user.UserFunction;
 import model.user.UserRole;
 import view.terminal.*;
@@ -21,6 +27,12 @@ public class Main
         TerminalUtils.criarDadosTeste();
 
         //c.addFilter(new TipoAtividade("ref"),new StringFilterContains(), TipoAtividade::getDesignacao,"Filtrar denominacao contem");
+
+        UIOperations.addMap(Integer.class,new IntegerUI());
+        UIOperations.addMap(Float.class,new FloatUI());
+        UIOperations.addMap(String.class,new StringUI());
+        UIOperations.addMap(new Range<Integer>(0,1).getClass(),new IntegerRangeUI());
+
 
         List<FilterEntry<?,?,?>> filters = ConfigParser.parseConfig();
 

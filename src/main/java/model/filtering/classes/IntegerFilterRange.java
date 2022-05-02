@@ -1,10 +1,10 @@
 package model.filtering.classes;
 
 import model.filtering.Filter;
-import model.filtering.config.Pair;
+import model.filtering.config.Range;
 
 
-public class IntegerFilterRange implements Filter<Integer, Pair<Integer>>
+public class IntegerFilterRange implements Filter<Integer, Range<Integer>>
 {
     @Override
     public Class<Integer> getType()
@@ -13,13 +13,13 @@ public class IntegerFilterRange implements Filter<Integer, Pair<Integer>>
     }
 
     @Override
-    public Class<Pair<Integer>> getSecondType()
+    public Class<Range<Integer>> getSecondType()
     {
-        return (Class<Pair<Integer>>) new Pair<Integer>(0,1).getClass();
+        return (Class<Range<Integer>>) (Class<?>) Range.class;
     }
 
     @Override
-    public boolean evaluate(Integer value, Pair<Integer> filter)
+    public boolean evaluate(Integer value, Range<Integer> filter)
     {
         return value >= filter.getFirst() && value <= filter.getSecond();
     }
