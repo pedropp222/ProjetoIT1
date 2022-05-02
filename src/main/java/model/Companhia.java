@@ -2,6 +2,9 @@ package model;
 
 import model.exception.NomeInvalidoException;
 import model.factories.MegaFactory;
+import model.filtering.Extractor;
+import model.filtering.Filter;
+import model.filtering.config.FilterEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ public class Companhia
 
     private static Companhia instance = null;
 
+    private List<FilterEntry<?,?,?>> listaFiltros;
 
     public Companhia(MegaFactory factory) throws IllegalArgumentException
     {
@@ -36,6 +40,7 @@ public class Companhia
         listaTipoAtividades = new ArrayList<>();
         listaAtividades = new ArrayList<>();
         pacoteTurismos = new ArrayList<>();
+        listaFiltros = new ArrayList<>();
     }
 
     public Local criarLocal(String cidade, String pais, String desc) throws NomeInvalidoException
@@ -190,6 +195,76 @@ public class Companhia
     public static void destroy()
     {
         instance = null;
+    }
+
+    public <T,F,F2> void addFilter(Class<T> objectType, Filter<F,F2> type, Extractor<T,F> method, String text)
+    {
+        listaFiltros.add(new FilterEntry<T,F,F2>(objectType, type, method, text));
+    }
+
+    public void addFilter(FilterEntry<?,?,?> entry)
+    {
+        listaFiltros.add(entry);
+    }
+
+    public <T,F,F2> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F,F2> filter, F2 filterValue,boolean negate)
+    {
+        List<T> filtered = new ArrayList<>();
+
+        for(T o : listFromType(object))
+        {
+            if (filter.evaluate(extractor.extractValue(o), filterValue) == !negate)
+            {
+                filtered.add(o);
+            }
+        }
+
+        return filtered;
+    }
+
+    public <T> List<T> listFromType(T type)
+    {
+        if (type instanceof TipoAtividade)
+        {
+            return (List<T>) listaTipoAtividades;
+        }
+        else if (type instanceof TipoAlojamento)
+        {
+            return (List<T>) listaTipoAlojamentos;
+        }
+        else if (type instanceof Alojamento)
+        {
+            return (List<T>) listaAlojamentos;
+        }
+        else if (type instanceof Atividade)
+        {
+            return (List<T>) listaAtividades;
+        }
+        else if (type instanceof Local)
+        {
+            return (List<T>) listaLocais;
+        }
+        else if (type instanceof PacoteTurismo)
+        {
+            return (List<T>) pacoteTurismos;
+        }
+
+        return null;
+    }
+
+    public <T> List<FilterEntry<T,?,?>> getFiltersFor(T type)
+    {
+        List<FilterEntry<T,?,?>> filters = new ArrayList<>();
+
+        for(FilterEntry<?,?,?> f : listaFiltros)
+        {
+            if (f.getObjectType().equals(type.getClass()))
+            {
+                filters.add((FilterEntry<T,?,?>) f);
+            }
+        }
+
+        return filters;
     }
 
 }

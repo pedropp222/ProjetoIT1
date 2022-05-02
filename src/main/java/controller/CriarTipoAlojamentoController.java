@@ -6,7 +6,7 @@ import model.exception.NomeInvalidoException;
 
 public class CriarTipoAlojamentoController
 {
-    private Companhia companhia;
+    private final Companhia companhia;
     private TipoAlojamento tipo;
 
     public CriarTipoAlojamentoController()
@@ -18,12 +18,7 @@ public class CriarTipoAlojamentoController
     {
         tipo = companhia.criarTipoAlojamento(desc);
 
-        if (!companhia.validarTipoAlojamento(tipo))
-        {
-            return false;
-        }
-
-        return true;
+        return companhia.validarTipoAlojamento(tipo);
     }
 
     public boolean gravarTipoAlojamento()

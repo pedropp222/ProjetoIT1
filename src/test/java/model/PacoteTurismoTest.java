@@ -24,6 +24,29 @@ class PacoteTurismoTest
     }
 
     @Test
+    public void shouldNotCreatePacoteTurismo_emptyArray()
+    {
+        List<Reserva> res = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class,()->new PacoteTurismo(res));
+    }
+
+    @Test
+    public void shouldCreateAndContain3Reservas()
+    {
+        List<Reserva> res = new ArrayList<>();
+        for(int i = 0; i < 3; i++)
+        {
+            res.add(mock(Reserva.class));
+        }
+
+        PacoteTurismo pt = new PacoteTurismo(res);
+
+        assertEquals(3,pt.getNumServicos());
+
+    }
+
+
+    @Test
     public void shouldNotCreatePacoteTurismo_invalidValue()
     {
         assertThrows(IllegalArgumentException.class,()->new PacoteTurismo(null));

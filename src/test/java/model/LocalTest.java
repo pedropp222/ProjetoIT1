@@ -119,5 +119,4 @@ class LocalTest
 
         assertNotEquals(l,l2);
     }
-
 }

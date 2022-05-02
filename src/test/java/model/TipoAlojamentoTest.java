@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TipoAlojamentoTest
 {
     @Test
-    public void shouldCreateTipoAlocamento()
+    public void shouldCreateTipoAlojamento()
     {
         assertDoesNotThrow(()->new TipoAlojamento("designacao"));
     }

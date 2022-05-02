@@ -1,7 +1,7 @@
 package controller;
 
 import model.Companhia;
-import model.Local;
+import model.PacoteTurismo;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
@@ -9,18 +9,18 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarLocaisController implements Filterable<Local>
+public class ListarPacoteController implements Filterable<PacoteTurismo>
 {
     private final Companhia companhia;
 
-    private Local refObj;
+    private PacoteTurismo refObj;
 
-    public ListarLocaisController()
+    public ListarPacoteController()
     {
         companhia = Companhia.getInstance();
-        if (companhia.getListaLocais().size() != 0)
+        if (companhia.getPacoteTurismos().size() != 0)
         {
-            refObj = companhia.getListaLocais().get(0);
+            refObj = companhia.getPacoteTurismos().get(0);
         }
     }
 
@@ -28,7 +28,7 @@ public class ListarLocaisController implements Filterable<Local>
     {
         List<String> lst = new ArrayList<>();
 
-        for(Local l : companhia.getListaLocais())
+        for(PacoteTurismo l : companhia.getPacoteTurismos())
         {
             lst.add(l.toString());
         }
@@ -36,12 +36,12 @@ public class ListarLocaisController implements Filterable<Local>
         return lst;
     }
 
-    public <F,F2> List<Local> filtrar(Extractor<Local,F> extractor, Filter<F,F2> filtro, F2 valor, boolean negate)
+    public <F,F2> List<PacoteTurismo> filtrar(Extractor<PacoteTurismo,F> extractor, Filter<F,F2> filtro, F2 valor,boolean negate)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor,negate);
     }
 
-    public List<FilterEntry<Local,?,?>> getFiltros()
+    public List<FilterEntry<PacoteTurismo,?,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
     }

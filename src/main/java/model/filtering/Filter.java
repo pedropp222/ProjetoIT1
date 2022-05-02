@@ -1,6 +1,8 @@
 package model.filtering;
 
-public interface Filter
+public interface Filter<V,V2>
 {
-    String getName();
+    Class<V> getType();
+    Class<V2> getSecondType();
+    boolean evaluate(V value, V2 filter);
 }

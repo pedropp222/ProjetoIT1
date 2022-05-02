@@ -2,15 +2,13 @@ package model.run;
 
 import model.Companhia;
 import model.factories.MegaFactory;
+import model.filtering.config.FilterEntry;
+import model.filtering.parse.ConfigParser;
 import model.user.UserFunction;
 import model.user.UserRole;
-import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import view.terminal.*;
 import view.terminal.util.TerminalUtils;
 
-import java.io.File;
 import java.util.*;
 
 public class Main
@@ -22,8 +20,16 @@ public class Main
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();
 
+        //c.addFilter(new TipoAtividade("ref"),new StringFilterContains(), TipoAtividade::getDesignacao,"Filtrar denominacao contem");
 
-        boolean run = true;
+        List<FilterEntry<?,?,?>> filters = ConfigParser.parseConfig();
+
+        for (FilterEntry<?,?,?> f : filters)
+        {
+            c.addFilter(f);
+        }
+
+        boolean run;
 
         Scanner sc = new Scanner(System.in);
 
@@ -76,7 +82,8 @@ public class Main
         }));
         functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Atividades", () ->
         {
-            TerminalUtils.listarLista(c.getListaAtividades());
+            ListarAtividadesUI ui = new ListarAtividadesUI();
+            ui.run();
         }));
 
         functionList.add(new UserFunction(UserRole.CLIENTE, "Criar Pacote de Turismo", () ->
@@ -86,7 +93,8 @@ public class Main
         }));
         functionList.add(new UserFunction(UserRole.CLIENTE, "Listar Pacotes de Turismo", () ->
         {
-            TerminalUtils.listarLista(c.getPacoteTurismos());
+            ListarPacoteTurismoUI cl = new ListarPacoteTurismoUI();
+            cl.run();
         }));
 
 

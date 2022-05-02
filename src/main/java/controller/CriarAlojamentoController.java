@@ -20,12 +20,7 @@ public class CriarAlojamentoController
     {
         aloj = companhia.criarAlojamento(d,companhia.getListaTipoAlojamento().get(t),companhia.getListaLocais().get(l),min,max,sem,prec);
 
-        if (companhia.validarAlojamento(aloj))
-        {
-            return true;
-        }
-
-        return false;
+        return companhia.validarAlojamento(aloj);
     }
 
     public List<String> getTiposAlojamento()

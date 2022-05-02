@@ -23,4 +23,9 @@ public class PacoteTurismo
         }
         return sb.toString();
     }
+
+    public int getNumServicos()
+    {
+        return servicosEscolhidos.size();
+    }
 }

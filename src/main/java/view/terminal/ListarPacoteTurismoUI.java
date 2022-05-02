@@ -1,17 +1,17 @@
 package view.terminal;
 
-import controller.ListarLocaisController;
+import controller.ListarPacoteController;
 import model.filtering.ui.UIOperations;
 
 import java.util.List;
 
-public class ListarLocaisUI
+public class ListarPacoteTurismoUI
 {
-    private final ListarLocaisController contr;
+    private final ListarPacoteController contr;
 
-    public ListarLocaisUI()
+    public ListarPacoteTurismoUI()
     {
-        contr = new ListarLocaisController();
+        contr = new ListarPacoteController();
     }
 
     public void run()
@@ -20,7 +20,7 @@ public class ListarLocaisUI
 
         if (locais.size() == 0)
         {
-            System.out.println("Nao existem locais registados.");
+            System.out.println("Nao existem pacotes de turismo registados.");
         }
         else
         {

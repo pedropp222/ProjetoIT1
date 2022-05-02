@@ -1,6 +1,7 @@
 package view.terminal;
 
 import controller.ListarTipoAtividadeController;
+import model.filtering.ui.UIOperations;
 
 import java.util.List;
 
@@ -21,11 +22,9 @@ public class ListarTipoAtividadeUI implements Runnable
         if (lista.size() == 0)
         {
             System.out.println("Nao existem tipos de atividades registados.");
-        }
-
-        for (String t : lista)
+        } else
         {
-            System.out.println("- " + t);
+            UIOperations.listFilterUI(cnt,lista);
         }
     }
 }
