@@ -29,9 +29,9 @@ public class Main
 
         //c.addFilter(new TipoAtividade("ref"),new StringFilterContains(), TipoAtividade::getDesignacao,"Filtrar denominacao contem");
 
-        List<FilterEntry<?,?>> filters = ConfigParser.parseConfig();
+        List<FilterEntry<?,?,?>> filters = ConfigParser.parseConfig();
 
-        for (FilterEntry<?,?> f : filters)
+        for (FilterEntry<?,?,?> f : filters)
         {
             c.addFilter(f);
         }

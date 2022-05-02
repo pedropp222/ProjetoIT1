@@ -30,7 +30,7 @@ public class ListarTipoAtividadeUI implements Runnable
             System.out.println("Nao existem tipos de atividades registados.");
         } else
         {
-            List<FilterEntry<TipoAtividade, ?>> filtrosDisponiveis = cnt.getFiltros();
+            List<FilterEntry<TipoAtividade, ?,?>> filtrosDisponiveis = cnt.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

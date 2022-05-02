@@ -18,6 +18,8 @@ public class TipoAtividade
         return designacao;
     }
 
+    public int getDesignacaoLength(){return designacao.length();}
+
     public void setDesignacao(String designacao) throws NomeInvalidoException
     {
         if (designacao == null) throw new NomeInvalidoException("Designacao nao pode ser null.");

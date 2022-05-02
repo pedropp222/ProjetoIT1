@@ -30,7 +30,7 @@ public class ListarTipoAlojamentosUI
         }
         else
         {
-            List<FilterEntry<TipoAlojamento, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<TipoAlojamento, ?,?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

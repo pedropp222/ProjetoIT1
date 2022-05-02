@@ -29,7 +29,7 @@ public class ListarAtividadesUI implements Runnable
         }
         else
         {
-            List<FilterEntry<Atividade, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<Atividade, ?,?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

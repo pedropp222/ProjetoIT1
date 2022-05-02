@@ -36,12 +36,12 @@ public class ListarTipoAtividadeController
         return lst;
     }
 
-    public <F> List<TipoAtividade> filtrar(Extractor<TipoAtividade,F> extractor, Filter<F> filtro, F valor)
+    public <F,F2> List<TipoAtividade> filtrar(Extractor<TipoAtividade,F> extractor, Filter<F,F2> filtro, F2 valor)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor);
     }
 
-    public List<FilterEntry<TipoAtividade,?>> getFiltros()
+    public List<FilterEntry<TipoAtividade,?,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
     }

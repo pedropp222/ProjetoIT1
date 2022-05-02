@@ -28,7 +28,7 @@ public class ListarLocaisUI
         }
         else
         {
-            List<FilterEntry<Local, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<Local, ?,?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

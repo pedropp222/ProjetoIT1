@@ -1,7 +1,8 @@
 package model.filtering;
 
-public interface Filter<V>
+public interface Filter<V,V2>
 {
     Class<V> getType();
-    boolean evaluate(V value, V filter);
+    Class<V2> getSecondType();
+    boolean evaluate(V value, V2 filter);
 }

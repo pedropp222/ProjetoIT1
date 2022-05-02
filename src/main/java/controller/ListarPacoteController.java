@@ -37,12 +37,12 @@ public class ListarPacoteController
         return lst;
     }
 
-    public <F> List<PacoteTurismo> filtrar(Extractor<PacoteTurismo,F> extractor, Filter<F> filtro, F valor)
+    public <F,F2> List<PacoteTurismo> filtrar(Extractor<PacoteTurismo,F> extractor, Filter<F,F2> filtro, F2 valor)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor);
     }
 
-    public List<FilterEntry<PacoteTurismo,?>> getFiltros()
+    public List<FilterEntry<PacoteTurismo,?,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
     }

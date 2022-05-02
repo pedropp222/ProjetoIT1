@@ -36,12 +36,12 @@ public class ListarTipoAlojamentosController
         return lst;
     }
 
-    public <F> List<TipoAlojamento> filtrar(Extractor<TipoAlojamento,F> extractor, Filter<F> filtro, F valor)
+    public <F,F2> List<TipoAlojamento> filtrar(Extractor<TipoAlojamento,F> extractor, Filter<F,F2> filtro, F2 valor)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor);
     }
 
-    public List<FilterEntry<TipoAlojamento,?>> getFiltros()
+    public List<FilterEntry<TipoAlojamento,?,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
     }

@@ -15,9 +15,9 @@ public class ConfigParser
 {
     public static boolean debug = false;
 
-    public static List<FilterEntry<?, ?>> parseConfig()
+    public static List<FilterEntry<?, ?,?>> parseConfig()
     {
-        List<FilterEntry<?, ?>> entries = new ArrayList<>();
+        List<FilterEntry<?, ?,?>> entries = new ArrayList<>();
 
         try
         {
@@ -51,7 +51,7 @@ public class ConfigParser
                         {
                             if (methodExists(clazz, tokens[2]))
                             {
-                                Filter<?> f = (Filter<?>) filter.getDeclaredConstructor().newInstance();
+                                Filter<?,?> f = (Filter<?,?>) filter.getDeclaredConstructor().newInstance();
 
                                 if (debug) System.out.println("Filter created");
 
@@ -70,7 +70,7 @@ public class ConfigParser
 
                                 if (debug) System.out.println("Extractor created");
 
-                                FilterEntry<?, ?> entry = new FilterEntry(clazz, f, ext, tokens[3]);
+                                FilterEntry<?, ?,?> entry = new FilterEntry(clazz, f, ext, tokens[3]);
 
                                 if (debug) System.out.println("Filter entry created");
 

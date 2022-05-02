@@ -23,7 +23,7 @@ public class Companhia
 
     private static Companhia instance = null;
 
-    private List<FilterEntry<?,?>> listaFiltros;
+    private List<FilterEntry<?,?,?>> listaFiltros;
 
     public Companhia(MegaFactory factory) throws IllegalArgumentException
     {
@@ -198,17 +198,17 @@ public class Companhia
         instance = null;
     }
 
-    public <T,F> void addFilter(Class<T> objectType, Filter<F> type, Extractor<T,F> method, String text)
+    public <T,F,F2> void addFilter(Class<T> objectType, Filter<F,F2> type, Extractor<T,F> method, String text)
     {
-        listaFiltros.add(new FilterEntry<T,F>(objectType, type, method, text));
+        listaFiltros.add(new FilterEntry<T,F,F2>(objectType, type, method, text));
     }
 
-    public void addFilter(FilterEntry<?,?> entry)
+    public void addFilter(FilterEntry<?,?,?> entry)
     {
         listaFiltros.add(entry);
     }
 
-    public <T,F> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F> filter, F filterValue)
+    public <T,F,F2> List<T> evaluateFilter(T object, Extractor<T,F> extractor, Filter<F,F2> filter, F2 filterValue)
     {
         List<T> filtered = new ArrayList<>();
 
@@ -253,15 +253,15 @@ public class Companhia
         return null;
     }
 
-    public <T> List<FilterEntry<T,?>> getFiltersFor(T type)
+    public <T> List<FilterEntry<T,?,?>> getFiltersFor(T type)
     {
-        List<FilterEntry<T,?>> filters = new ArrayList<>();
+        List<FilterEntry<T,?,?>> filters = new ArrayList<>();
 
-        for(FilterEntry<?,?> f : listaFiltros)
+        for(FilterEntry<?,?,?> f : listaFiltros)
         {
             if (f.getObjectType().equals(type.getClass()))
             {
-                filters.add((FilterEntry<T,?>) f);
+                filters.add((FilterEntry<T,?,?>) f);
             }
         }
 

@@ -31,7 +31,7 @@ public class ListarAlojamentosUI implements Runnable
         }
         else
         {
-            List<FilterEntry<Alojamento, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<Alojamento, ?,?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

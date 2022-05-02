@@ -37,12 +37,12 @@ public class ListarLocaisController
         return lst;
     }
 
-    public <F> List<Local> filtrar(Extractor<Local,F> extractor, Filter<F> filtro, F valor)
+    public <F,F2> List<Local> filtrar(Extractor<Local,F> extractor, Filter<F,F2> filtro, F2 valor)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor);
     }
 
-    public List<FilterEntry<Local,?>> getFiltros()
+    public List<FilterEntry<Local,?,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
     }

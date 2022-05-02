@@ -3,14 +3,14 @@ package model.filtering.config;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 
-public class FilterEntry<T,F>
+public class FilterEntry<T,F,F2>
 {
     private final Class<T> objectType;
-    private final Filter<F> filterClass;
+    private final Filter<F,F2> filterClass;
     private final Extractor<T,F> extratorMethod;
     private final String text;
 
-    public FilterEntry(Class<T> objectType, Filter<F> filterClass, Extractor<T,F> extratorMethod, String text)
+    public FilterEntry(Class<T> objectType, Filter<F,F2> filterClass, Extractor<T,F> extratorMethod, String text)
     {
         this.objectType = objectType;
         this.filterClass = filterClass;
@@ -23,7 +23,7 @@ public class FilterEntry<T,F>
         return objectType;
     }
 
-    public Filter<F> getFilterClass()
+    public Filter<F,F2> getFilterClass()
     {
         return filterClass;
     }

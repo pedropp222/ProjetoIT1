@@ -4,6 +4,7 @@ import model.*;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
+import model.filtering.config.Pair;
 import model.filtering.ui.UIFilter;
 
 import java.time.DateTimeException;
@@ -95,7 +96,7 @@ public class TerminalUtils
         Companhia.getInstance().gravarAtividade(new Atividade("at5",ti5,l,l,6,11,DiaSemana.QUINTA,10f));
     }
 
-    public static <T,F> UIFilter popularFilterInfo(List<FilterEntry<T,?>> filtrosDisponiveis)
+    public static <T,F,F2> UIFilter popularFilterInfo(List<FilterEntry<T,?,?>> filtrosDisponiveis)
     {
         System.out.println("Filtros disponiveis:");
 
@@ -103,7 +104,7 @@ public class TerminalUtils
 
         System.out.println("0 - Nenhum filtro");
         int i = 0;
-        for (FilterEntry<?, ?> filt : filtrosDisponiveis)
+        for (FilterEntry<?, ?,?> filt : filtrosDisponiveis)
         {
             i++;
             System.out.println(i + " - " + filt.getText());
@@ -116,44 +117,83 @@ public class TerminalUtils
 
         if (escolha > 0 && escolha <= filtrosDisponiveis.size())
         {
-            FilterEntry<T, ?> filter = filtrosDisponiveis.get(escolha - 1);
+            FilterEntry<T, ?,?> filter = filtrosDisponiveis.get(escolha - 1);
 
-            if (filter.getFilterClass().getType().equals(String.class))
+            if (filter.getFilterClass().getType().equals(filter.getFilterClass().getSecondType()))
             {
-                System.out.print("Introduza o valor: ");
-
-                String valor = sc.nextLine();
-
-                Extractor<T, String> ext = (Extractor<T, String>) filter.getExtratorMethod();
-
-                Filter<String> filtro = (Filter<String>) filter.getFilterClass();
-
-                return new UIFilter<T, String>(valor,ext,filtro);
+                return simpleFilter(filter);
             }
-            else if (filter.getFilterClass().getType().equals(Integer.class))
+            else
             {
-                System.out.print("Introduza o numero: ");
-
-                int valor = sc.nextInt();
-
-                Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
-
-                Filter<Integer> filtro = (Filter<Integer>) filter.getFilterClass();
-
-                return new UIFilter<T, Integer>(valor,ext,filtro);
+                return advancedFilter(filter);
             }
-            else if (filter.getFilterClass().getType().equals(Float.class))
-            {
-                System.out.print("Introduza o numero: ");
+        }
 
-                float valor = sc.nextFloat();
+        return null;
+    }
 
-                Extractor<T, Float> ext = (Extractor<T, Float>) filter.getExtratorMethod();
+    private static <T,F,F2> UIFilter<T,F,F2> advancedFilter(FilterEntry<T,?,?> filter)
+    {
+        Scanner sc = new Scanner(System.in);
+        if (filter.getFilterClass().getSecondType().equals(Pair.class))
+        {
+            System.out.println("Introduza o minimo:");
+            int min = sc.nextInt();
+            System.out.println("Introduza o maximo:");
+            int max = sc.nextInt();
 
-                Filter<Float> filtro = (Filter<Float>) filter.getFilterClass();
+            Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
+            Filter<Integer, Pair<Integer>> filtro = (Filter<Integer, Pair<Integer>>) filter.getFilterClass();
 
-                return new UIFilter<T, Float>(valor,ext,filtro);
-            }
+            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Pair<Integer>>(new Pair<Integer>(min,max), ext, filtro);
+        }
+        else
+        {
+            System.out.println("Ainda nao ta implementado comparar "+filter.getFilterClass().getType()+" - "+filter.getFilterClass().getSecondType());
+        }
+
+        return null;
+    }
+
+    private static <T,F,F2> UIFilter<T,F,F2> simpleFilter(FilterEntry<T, ?,?> filter)
+    {
+        Scanner sc = new Scanner(System.in);
+        if (filter.getFilterClass().getType().equals(Float.class))
+        {
+            System.out.print("Introduza o numero: ");
+
+            float valor = sc.nextFloat();
+
+            Extractor<T, Float> ext = (Extractor<T, Float>) filter.getExtratorMethod();
+            Filter<Float, Float> filtro = (Filter<Float, Float>) filter.getFilterClass();
+
+            return (UIFilter<T, F, F2>) new UIFilter<T, Float, Float>(valor, ext, filtro);
+        }
+        else if (filter.getFilterClass().getType().equals(Integer.class))
+        {
+            System.out.print("Introduza o numero: ");
+
+            int valor = sc.nextInt();
+
+            Extractor<T, Integer> ext = (Extractor<T, Integer>) filter.getExtratorMethod();
+            Filter<Integer, Integer> filtro = (Filter<Integer, Integer>) filter.getFilterClass();
+
+            return (UIFilter<T, F, F2>) new UIFilter<T, Integer, Integer>(valor, ext, filtro);
+        }
+        else if (filter.getFilterClass().getType().equals(String.class))
+        {
+            System.out.print("Introduza o texto: ");
+
+            String valor = sc.nextLine();
+
+            Extractor<T, String> ext = (Extractor<T, String>) filter.getExtratorMethod();
+            Filter<String, String> filtro = (Filter<String, String>) filter.getFilterClass();
+
+            return (UIFilter<T, F, F2>) new UIFilter<T, String, String>(valor, ext, filtro);
+        }
+        else
+        {
+            System.out.println("Ainda nao ta implementado comparar "+filter.getFilterClass().getType());
         }
 
         return null;

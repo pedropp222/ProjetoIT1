@@ -29,7 +29,7 @@ public class ListarPacoteTurismoUI
         }
         else
         {
-            List<FilterEntry<PacoteTurismo, ?>> filtrosDisponiveis = contr.getFiltros();
+            List<FilterEntry<PacoteTurismo, ?,?>> filtrosDisponiveis = contr.getFiltros();
 
             UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
 

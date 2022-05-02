@@ -3,22 +3,22 @@ package model.filtering.ui;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 
-public class UIFilter<T,F>
+public class UIFilter<T,F,F2>
 {
-    private final F valor;
+    private final F2 valor;
 
     private final Extractor<T, F> ext;
 
-    private final Filter<F> filtro;
+    private final Filter<F,F2> filtro;
 
-    public UIFilter(F valor, Extractor<T, F> ext, Filter<F> filtro)
+    public UIFilter(F2 valor, Extractor<T, F> ext, Filter<F,F2> filtro)
     {
         this.valor = valor;
         this.ext = ext;
         this.filtro = filtro;
     }
 
-    public F getValor()
+    public F2 getValor()
     {
         return valor;
     }
@@ -28,7 +28,7 @@ public class UIFilter<T,F>
         return ext;
     }
 
-    public Filter<F> getFiltro()
+    public Filter<F,F2> getFiltro()
     {
         return filtro;
     }
