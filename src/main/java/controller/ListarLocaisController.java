@@ -10,7 +10,7 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarLocaisController
+public class ListarLocaisController implements Filterable<Local>
 {
     private final Companhia companhia;
 

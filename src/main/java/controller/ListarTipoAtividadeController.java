@@ -9,7 +9,7 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarTipoAtividadeController
+public class ListarTipoAtividadeController implements Filterable<TipoAtividade>
 {
     public Companhia companhia;
     public TipoAtividade refObj;
@@ -36,7 +36,7 @@ public class ListarTipoAtividadeController
         return lst;
     }
 
-    public <F,F2> List<TipoAtividade> filtrar(Extractor<TipoAtividade,F> extractor, Filter<F,F2> filtro, F2 valor)
+    public <F,F2> List<TipoAtividade> filtrar(Extractor<TipoAtividade, F> extractor, Filter<F,F2> filtro, F2 valor)
     {
         return companhia.evaluateFilter(refObj,extractor,filtro,valor);
     }

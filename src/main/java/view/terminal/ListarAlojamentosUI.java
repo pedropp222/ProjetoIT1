@@ -5,6 +5,7 @@ import model.Alojamento;
 import model.TipoAlojamento;
 import model.filtering.config.FilterEntry;
 import model.filtering.ui.UIFilter;
+import model.filtering.ui.UIOperations;
 import view.terminal.util.TerminalUtils;
 
 import java.util.ArrayList;
@@ -31,26 +32,7 @@ public class ListarAlojamentosUI implements Runnable
         }
         else
         {
-            List<FilterEntry<Alojamento, ?,?>> filtrosDisponiveis = contr.getFiltros();
-
-            UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
-
-            if (f != null)
-            {
-                List<Alojamento> filtrado = contr.filtrar(f.getExt(), f.getFiltro(), f.getValor());
-
-                for (Alojamento t : filtrado)
-                {
-                    System.out.println("- " + t);
-                }
-            }
-            else
-            {
-                for (String t : lista)
-                {
-                    System.out.println("- " + t);
-                }
-            }
+            UIOperations.listFilterUI(contr,lista);
         }
     }
 }

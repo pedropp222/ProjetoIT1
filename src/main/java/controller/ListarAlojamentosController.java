@@ -10,7 +10,7 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarAlojamentosController
+public class ListarAlojamentosController implements Filterable<Alojamento>
 {
     private final Companhia companhia;
 

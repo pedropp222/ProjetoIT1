@@ -6,6 +6,7 @@ import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
 import model.filtering.ui.UIFilter;
+import model.filtering.ui.UIOperations;
 import view.terminal.util.TerminalUtils;
 
 import java.util.List;
@@ -30,26 +31,7 @@ public class ListarTipoAtividadeUI implements Runnable
             System.out.println("Nao existem tipos de atividades registados.");
         } else
         {
-            List<FilterEntry<TipoAtividade, ?,?>> filtrosDisponiveis = cnt.getFiltros();
-
-            UIFilter f = TerminalUtils.popularFilterInfo(filtrosDisponiveis);
-
-            if (f != null)
-            {
-                List<TipoAtividade> filtrado = cnt.filtrar(f.getExt(), f.getFiltro(), f.getValor());
-
-                for (TipoAtividade t : filtrado)
-                {
-                    System.out.println("- " + t);
-                }
-            }
-            else
-            {
-                for (String t : lista)
-                {
-                    System.out.println("- " + t);
-                }
-            }
+            UIOperations.listFilterUI(cnt,lista);
         }
     }
 }
