@@ -20,25 +20,6 @@ public class IntegerFilterCompare implements Filter<Integer, NumberCompare<Integ
     @Override
     public boolean evaluate(Integer value, NumberCompare<Integer> filter)
     {
-        switch (filter.getType())
-        {
-            case EQUAL -> {
-                return value.compareTo(filter.getValue())==0;
-            }
-            case LESS -> {
-                return value.compareTo(filter.getValue())<0;
-            }
-            case MORE -> {
-                return value.compareTo(filter.getValue())>0;
-            }
-            case LESSEQUAL -> {
-                return value.compareTo(filter.getValue())<=0;
-            }
-            case MOREEQUAL -> {
-                return value.compareTo(filter.getValue())>=0;
-            }
-        }
-
-        return false;
+        return NumberCompare.compare(value,filter);
     }
 }

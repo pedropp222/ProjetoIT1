@@ -52,7 +52,7 @@ public class UIOperations
 
         System.out.println("0 - Nenhum filtro");
         int i = 0;
-        for (FilterEntry<?, ?,?> filt : filtrosDisponiveis)
+        for (FilterEntry<?,?,?> filt : filtrosDisponiveis)
         {
             i++;
             System.out.println(i + " - " + filt.getText());

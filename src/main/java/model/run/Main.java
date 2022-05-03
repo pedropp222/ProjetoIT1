@@ -29,8 +29,9 @@ public class Main
         UIOperations.addMap(Float.class,new FloatUI());
         UIOperations.addMap(String.class,new StringUI());
         UIOperations.addMap(new Range<Integer>(0,1).getClass(),new IntegerRangeUI());
+        UIOperations.addMap(new Range<Float>(0f,1f).getClass(),new FloatRangeUI());
         UIOperations.addMap(new NumberCompare<Integer>(null,null).getClass(),new IntegerCompareUI());
-
+        UIOperations.addMap(new NumberCompare<Float>(null,null).getClass(),new FloatCompareUI());
 
         List<FilterEntry<?,?,?>> filters = ConfigParser.parseFilterConfig();
 
