@@ -54,6 +54,8 @@ public class TerminalUtils
         TipoAtividade ti6 = new TipoAtividade("escavação");
 
         Local l = new Local("porto","portugal","local 1");
+        Local l2 = new Local("braga","portugal","local 2");
+        Local l3 = new Local("madrid","espanha","local 3");
         TipoAlojamento t1 = new TipoAlojamento("tipoAlojamento 1");
         TipoAlojamento t2 = new TipoAlojamento("hotel 1");
         TipoAlojamento t3 = new TipoAlojamento("sitio 1");
@@ -66,6 +68,8 @@ public class TerminalUtils
         Companhia.getInstance().gravarTipoAtividade(ti6);
 
         Companhia.getInstance().gravarLocal(l);
+        Companhia.getInstance().gravarLocal(l2);
+        Companhia.getInstance().gravarLocal(l3);
         Companhia.getInstance().gravarTipoAlojamento(t1);
         Companhia.getInstance().gravarTipoAlojamento(t2);
         Companhia.getInstance().gravarTipoAlojamento(t3);

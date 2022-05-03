@@ -3,16 +3,13 @@ package model.run;
 import model.Companhia;
 import model.factories.MegaFactory;
 import model.filtering.config.FilterEntry;
+import model.filtering.config.NumberCompare;
 import model.filtering.config.Range;
 import model.filtering.parse.ConfigParser;
 import model.filtering.ui.UIOperations;
-import model.filtering.ui.classes.FloatUI;
-import model.filtering.ui.classes.IntegerRangeUI;
-import model.filtering.ui.classes.IntegerUI;
-import model.filtering.ui.classes.StringUI;
+import model.filtering.ui.classes.*;
 import model.user.UserFunction;
 import model.user.UserRole;
-import view.terminal.*;
 import view.terminal.util.TerminalUtils;
 
 import java.util.*;
@@ -32,6 +29,7 @@ public class Main
         UIOperations.addMap(Float.class,new FloatUI());
         UIOperations.addMap(String.class,new StringUI());
         UIOperations.addMap(new Range<Integer>(0,1).getClass(),new IntegerRangeUI());
+        UIOperations.addMap(new NumberCompare<Integer>(null,null).getClass(),new IntegerCompareUI());
 
 
         List<FilterEntry<?,?,?>> filters = ConfigParser.parseFilterConfig();
