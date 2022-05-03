@@ -5,7 +5,7 @@ import model.filtering.ui.UIOperations;
 
 import java.util.List;
 
-public class ListarLocaisUI
+public class ListarLocaisUI implements Runnable
 {
     private final ListarLocaisController contr;
 
@@ -14,6 +14,7 @@ public class ListarLocaisUI
         contr = new ListarLocaisController();
     }
 
+    @Override
     public void run()
     {
         List<String> locais = contr.getLocais();

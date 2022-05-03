@@ -34,7 +34,7 @@ public class Main
         UIOperations.addMap(new Range<Integer>(0,1).getClass(),new IntegerRangeUI());
 
 
-        List<FilterEntry<?,?,?>> filters = ConfigParser.parseConfig();
+        List<FilterEntry<?,?,?>> filters = ConfigParser.parseFilterConfig();
 
         for (FilterEntry<?,?,?> f : filters)
         {
@@ -45,70 +45,7 @@ public class Main
 
         Scanner sc = new Scanner(System.in);
 
-        List<UserFunction> functionList = new ArrayList<>();
-        functionList.add(new UserFunction(UserRole.ADMIN, "Criar Tipo Alojamento", () ->
-        {
-            CriarTipoAlojamentoUI ct = new CriarTipoAlojamentoUI();
-            ct.run();
-        }));
-        functionList.add(new UserFunction(UserRole.ADMIN, "Criar Tipo Atividade", () ->
-        {
-            CriarTipoAtividadeUI cl = new CriarTipoAtividadeUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.ADMIN, "Listar Tipo Alojamento", () ->
-        {
-            ListarTipoAlojamentosUI cl = new ListarTipoAlojamentosUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.ADMIN, "Listar Tipo Atividades", () ->
-        {
-            ListarTipoAtividadeUI cl = new ListarTipoAtividadeUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.ADMIN, "Criar Local", () ->
-        {
-            CriarLocalUI cl = new CriarLocalUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.ADMIN, "Listar Locais", () ->
-        {
-            ListarLocaisUI cl = new ListarLocaisUI();
-            cl.run();
-        }));
-
-        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Criar Novo Alojamento", () ->
-        {
-            CriarAlojamentoUI cl = new CriarAlojamentoUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Alojamentos", () ->
-        {
-            ListarAlojamentosUI ui = new ListarAlojamentosUI();
-            ui.run();
-        }));
-        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Criar Nova Atividade", () ->
-        {
-            CriarAtividadeUI cl = new CriarAtividadeUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.FORNECEDOR, "Listar Atividades", () ->
-        {
-            ListarAtividadesUI ui = new ListarAtividadesUI();
-            ui.run();
-        }));
-
-        functionList.add(new UserFunction(UserRole.CLIENTE, "Criar Pacote de Turismo", () ->
-        {
-            CriarPacoteUI cl = new CriarPacoteUI();
-            cl.run();
-        }));
-        functionList.add(new UserFunction(UserRole.CLIENTE, "Listar Pacotes de Turismo", () ->
-        {
-            ListarPacoteTurismoUI cl = new ListarPacoteTurismoUI();
-            cl.run();
-        }));
-
+        List<UserFunction> functionList = ConfigParser.parseUIFunctions();
 
         UserRole currentUser = UserRole.CLIENTE;
         HashMap<Integer, UserFunction> options = createOpcoes(currentUser, functionList);

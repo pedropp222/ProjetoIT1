@@ -5,7 +5,7 @@ import model.filtering.ui.UIOperations;
 
 import java.util.List;
 
-public class ListarTipoAlojamentosUI
+public class ListarTipoAlojamentosUI implements Runnable
 {
     private final ListarTipoAlojamentosController contr;
 
@@ -14,6 +14,7 @@ public class ListarTipoAlojamentosUI
         contr = new ListarTipoAlojamentosController();
     }
 
+    @Override
     public void run()
     {
         List<String> lista = contr.getAlojamentos();

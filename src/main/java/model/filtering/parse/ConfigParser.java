@@ -3,6 +3,8 @@ package model.filtering.parse;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
+import model.user.UserFunction;
+import model.user.UserRole;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +16,7 @@ public class ConfigParser
 {
     public static boolean debug = false;
 
-    public static List<FilterEntry<?, ?,?>> parseConfig()
+    public static List<FilterEntry<?, ?,?>> parseFilterConfig()
     {
         List<FilterEntry<?, ?,?>> entries = new ArrayList<>();
 
@@ -26,10 +28,7 @@ public class ConfigParser
             {
                 String[] tokens = sc.nextLine().split("\s*=\s*");
 
-                if (tokens.length != 4)
-                {
-                    System.out.println("Invalid line found");
-                } else
+                if (tokens.length == 4)
                 {
                     //token 0 = class name, token 1 = filter class, token 2 = extractor method, token 3 = filter text
 
@@ -96,6 +95,59 @@ public class ConfigParser
         return entries;
     }
 
+    public static List<UserFunction> parseUIFunctions()
+    {
+        List<UserFunction> functions = new ArrayList<>();
+
+        try (Scanner sc = new Scanner(new File("config.properties")))
+        {
+            while (sc.hasNextLine())
+            {
+                String[] tokens = sc.nextLine().split("\s*=\s*");
+
+                if (tokens.length == 3)
+                {
+                    //token 0 = user ID, token 1 = function description, token 2 = UI class
+
+                    UserRole role = getRole(tokens[0]);
+                    if (role == null)
+                    {
+                        if (debug) System.out.println("Invalid user ID " + tokens[0] + " found");
+                        continue;
+                    }
+                    String desc = tokens[1];
+                    if (isClass(tokens[2]))
+                    {
+                        Runnable clazz = (Runnable) Class.forName(tokens[2]).getConstructor().newInstance();
+                        functions.add(new UserFunction(role, desc, clazz));
+                    }
+                    else
+                    {
+                        if (debug) System.out.println("Invalid class " + tokens[2] + " found");
+                    }
+                }
+            }
+        } catch (Exception e)
+        {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+        return functions;
+    }
+
+    private static UserRole getRole(String role)
+    {
+        try
+        {
+            return UserRole.values()[Integer.parseInt(role)];
+        }
+        catch (ArrayIndexOutOfBoundsException | NumberFormatException e)
+        {
+            System.out.println("Invalid user ID found: " + role);
+            return null;
+        }
+    }
+
     private static boolean isClass(String s)
     {
         //try and find class s using reflection
@@ -121,5 +173,4 @@ public class ConfigParser
             return false;
         }
     }
-
 }

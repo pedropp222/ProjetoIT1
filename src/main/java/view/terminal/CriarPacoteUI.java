@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CriarPacoteUI
+public class CriarPacoteUI implements Runnable
 {
     private final CriarPacoteController contr;
     private final Scanner sc = new Scanner(System.in);
@@ -22,6 +22,7 @@ public class CriarPacoteUI
         contr = new CriarPacoteController();
     }
 
+    @Override
     public void run()
     {
         menuLoop();
