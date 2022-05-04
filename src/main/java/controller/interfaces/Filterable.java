@@ -1,4 +1,4 @@
-package controller;
+package controller.interfaces;
 
 import model.filtering.Extractor;
 import model.filtering.Filter;

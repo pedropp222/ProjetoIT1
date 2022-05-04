@@ -1,23 +1,26 @@
 package view.terminal;
 
 import controller.ListarTipoAlojamentosController;
+import controller.interfaces.ControllerLister;
+import model.TipoAlojamento;
 import model.filtering.ui.UIOperations;
+import model.parsing.util.ControllerParserUtils;
 
 import java.util.List;
 
 public class ListarTipoAlojamentosUI implements Runnable
 {
-    private final ListarTipoAlojamentosController contr;
+    private final ControllerLister<TipoAlojamento> contr;
 
     public ListarTipoAlojamentosUI()
     {
-        contr = new ListarTipoAlojamentosController();
+        contr = ControllerParserUtils.requestListControllerOfType(TipoAlojamento.class);
     }
 
     @Override
     public void run()
     {
-        List<String> lista = contr.getAlojamentos();
+        List<String> lista = contr.getList();
 
         if (lista.size() == 0)
         {

@@ -1,23 +1,31 @@
 package view.terminal;
 
-import controller.ListarAlojamentosController;
+import controller.interfaces.ControllerLister;
+import model.Alojamento;
 import model.filtering.ui.UIOperations;
+import model.parsing.util.ControllerParserUtils;
 
 import java.util.List;
 
 public class ListarAlojamentosUI implements Runnable
 {
-    ListarAlojamentosController contr;
+    ControllerLister<Alojamento> contr;
 
     public ListarAlojamentosUI()
     {
-        contr = new ListarAlojamentosController();
+        contr = ControllerParserUtils.requestListControllerOfType(Alojamento.class);
     }
 
     @Override
     public void run()
     {
-        List<String> lista = contr.getAlojamentos();
+        if (contr == null)
+        {
+            System.out.println("Nao existe controlador para este UI");
+            return;
+        }
+
+        List<String> lista = contr.getList();
 
         if (lista.size() == 0)
         {

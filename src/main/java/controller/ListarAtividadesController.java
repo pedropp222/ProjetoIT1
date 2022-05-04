@@ -1,5 +1,8 @@
 package controller;
 
+import controller.interfaces.ControllerLister;
+import controller.interfaces.Filterable;
+import model.Alojamento;
 import model.Atividade;
 import model.Companhia;
 import model.filtering.Extractor;
@@ -9,31 +12,22 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarAtividadesController implements Filterable<Atividade>
+public class ListarAtividadesController extends ControllerLister<Atividade>
 {
-    private final Companhia companhia;
-
-    private Atividade refObj;
-
     public ListarAtividadesController()
     {
-        companhia = Companhia.getInstance();
-        if (companhia.getListaAtividades().size() != 0)
-        {
-            refObj = companhia.getListaAtividades().get(0);
-        }
+        super(Companhia.getInstance());
     }
 
-    public List<String> getAtividades()
+    @Override
+    public Atividade getRefObj()
     {
-        List<String> lst = new ArrayList<>();
-
-        for(Atividade ta : companhia.getListaAtividades())
+        if (companhia.getListaAtividades().size() == 0)
         {
-            lst.add(ta.toString());
+            return refObj;
         }
-
-        return lst;
+        refObj = companhia.getListaAtividades().get(0);
+        return refObj;
     }
 
     public <F,F2> List<Atividade> filtrar(Extractor<Atividade,F> extractor, Filter<F,F2> filtro, F2 valor, boolean negate)

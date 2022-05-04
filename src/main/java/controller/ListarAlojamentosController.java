@@ -1,39 +1,32 @@
 package controller;
 
+import controller.interfaces.ControllerLister;
 import model.Alojamento;
 import model.Companhia;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ListarAlojamentosController implements Filterable<Alojamento>
+public class ListarAlojamentosController extends ControllerLister<Alojamento>
 {
-    private final Companhia companhia;
-
-    private Alojamento refObj;
-
     public ListarAlojamentosController()
     {
-        companhia = Companhia.getInstance();
-        if (companhia.getListaAlojamentos().size() != 0)
-        {
-            refObj = companhia.getListaAlojamentos().get(0);
-        }
+        super(Companhia.getInstance());
     }
 
-    public List<String> getAlojamentos()
+    public Alojamento getRefObj()
     {
-        List<String> lst = new ArrayList<>();
-
-        for(Alojamento ta : companhia.getListaAlojamentos())
+        if (companhia.getListaAlojamentos().size() == 0)
         {
-            lst.add(ta.toString());
+            return refObj;
         }
-
-        return lst;
+        else
+        {
+            refObj = companhia.getListaAlojamentos().get(0);
+            return refObj;
+        }
     }
 
     public <F,F2> List<Alojamento> filtrar(Extractor<Alojamento,F> extractor, Filter<F,F2> filtro, F2 valor, boolean negate)
@@ -45,5 +38,4 @@ public class ListarAlojamentosController implements Filterable<Alojamento>
     {
         return companhia.getFiltersFor(refObj);
     }
-
 }

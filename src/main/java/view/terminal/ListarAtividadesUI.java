@@ -1,23 +1,25 @@
 package view.terminal;
 
-import controller.ListarAtividadesController;
+import controller.interfaces.ControllerLister;
+import model.Atividade;
 import model.filtering.ui.UIOperations;
+import model.parsing.util.ControllerParserUtils;
 
 import java.util.List;
 
 public class ListarAtividadesUI implements Runnable
 {
-    ListarAtividadesController contr;
+    ControllerLister<Atividade> contr;
 
     public ListarAtividadesUI()
     {
-        contr = new ListarAtividadesController();
+        contr = ControllerParserUtils.requestListControllerOfType(Atividade.class);
     }
 
     @Override
     public void run()
     {
-        List<String> lista = contr.getAtividades();
+        List<String> lista = contr.getList();
 
         if (lista.size() == 0)
         {

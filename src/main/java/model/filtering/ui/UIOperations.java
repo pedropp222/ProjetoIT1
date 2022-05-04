@@ -1,6 +1,6 @@
 package model.filtering.ui;
 
-import controller.Filterable;
+import controller.interfaces.Filterable;
 import model.filtering.Extractor;
 import model.filtering.Filter;
 import model.filtering.config.FilterEntry;

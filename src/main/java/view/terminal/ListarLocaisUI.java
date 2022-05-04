@@ -1,23 +1,25 @@
 package view.terminal;
 
-import controller.ListarLocaisController;
+import controller.interfaces.ControllerLister;
+import model.Local;
 import model.filtering.ui.UIOperations;
+import model.parsing.util.ControllerParserUtils;
 
 import java.util.List;
 
 public class ListarLocaisUI implements Runnable
 {
-    private final ListarLocaisController contr;
+    private final ControllerLister<Local> contr;
 
     public ListarLocaisUI()
     {
-        contr = new ListarLocaisController();
+        contr = ControllerParserUtils.requestListControllerOfType(Local.class);
     }
 
     @Override
     public void run()
     {
-        List<String> locais = contr.getLocais();
+        List<String> locais = contr.getList();
 
         if (locais.size() == 0)
         {

@@ -7,8 +7,10 @@ import model.user.UserFunction;
 import model.user.UserRole;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,10 +22,8 @@ public class ConfigParser
     {
         List<FilterEntry<?, ?,?>> entries = new ArrayList<>();
 
-        try
+        try(Scanner sc = new Scanner(new File("config.properties")))
         {
-            Scanner sc = new Scanner(new File("config.properties"));
-
             while (sc.hasNextLine())
             {
                 String[] tokens = sc.nextLine().split("\s*=\s*");
@@ -95,15 +95,17 @@ public class ConfigParser
         return entries;
     }
 
-    public static List<UserFunction> parseUIFunctions()
+    public static <T extends Runnable> List<UserFunction> parseUIFunctions()
     {
         List<UserFunction> functions = new ArrayList<>();
+
+        String[] tokens = new String[0];
 
         try (Scanner sc = new Scanner(new File("config.properties")))
         {
             while (sc.hasNextLine())
             {
-                String[] tokens = sc.nextLine().split("\s*=\s*");
+                tokens = sc.nextLine().split("\s*=\s*");
 
                 if (tokens.length == 3)
                 {
@@ -118,7 +120,7 @@ public class ConfigParser
                     String desc = tokens[1];
                     if (isClass(tokens[2]))
                     {
-                        Runnable clazz = (Runnable) Class.forName(tokens[2]).getConstructor().newInstance();
+                        T clazz = (T) Class.forName(tokens[2]).getConstructor().newInstance();
                         functions.add(new UserFunction(role, desc, clazz));
                     }
                     else
@@ -127,9 +129,21 @@ public class ConfigParser
                     }
                 }
             }
-        } catch (Exception e)
+        } catch (FileNotFoundException | ClassNotFoundException e)
         {
-            System.out.println("Error reading file: " + e.getMessage());
+            System.out.println("Error reading file (ui functions): " + e.getMessage());
+        } catch (InvocationTargetException e)
+        {
+            System.out.println("Invocation error (ui functions): "+e.getMessage()+"\n"+Arrays.toString(tokens)+" - "+e.getCause());
+        } catch (InstantiationException e)
+        {
+            System.out.println("Class instantiation error (ui functions): "+e.getMessage());
+        } catch (IllegalAccessException e)
+        {
+            System.out.println("Illegal acess error (ui functions): "+e.getMessage());
+        } catch (NoSuchMethodException e)
+        {
+            System.out.println("Invalid method (ui functions): "+e.getMessage());
         }
 
         return functions;

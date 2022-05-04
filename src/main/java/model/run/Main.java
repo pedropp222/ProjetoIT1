@@ -8,10 +8,12 @@ import model.filtering.config.Range;
 import model.filtering.parse.ConfigParser;
 import model.filtering.ui.UIOperations;
 import model.filtering.ui.classes.*;
+import model.parsing.ControllerParser;
 import model.user.UserFunction;
 import model.user.UserRole;
 import view.terminal.util.TerminalUtils;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main
@@ -23,22 +25,32 @@ public class Main
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();
 
+        //Controller operations
+
+        ControllerParser.parseControllers();
+
+        System.out.println("Controllers carregados: "+ControllerParser.getListControllerListers().size());
+
+        //Filtering operations
+
         //c.addFilter(new TipoAtividade("ref"),new StringFilterContains(), TipoAtividade::getDesignacao,"Filtrar denominacao contem");
 
-        UIOperations.addMap(Integer.class,new IntegerUI());
-        UIOperations.addMap(Float.class,new FloatUI());
-        UIOperations.addMap(String.class,new StringUI());
-        UIOperations.addMap(new Range<Integer>(0,1).getClass(),new IntegerRangeUI());
-        UIOperations.addMap(new Range<Float>(0f,1f).getClass(),new FloatRangeUI());
-        UIOperations.addMap(new NumberCompare<Integer>(null,null).getClass(),new IntegerCompareUI());
-        UIOperations.addMap(new NumberCompare<Float>(null,null).getClass(),new FloatCompareUI());
+        UIOperations.addMap(Integer.class, new IntegerUI());
+        UIOperations.addMap(Float.class, new FloatUI());
+        UIOperations.addMap(String.class, new StringUI());
+        UIOperations.addMap(new Range<Integer>(0, 1).getClass(), new IntegerRangeUI());
+        UIOperations.addMap(new Range<Float>(0f, 1f).getClass(), new FloatRangeUI());
+        UIOperations.addMap(new NumberCompare<Integer>(null, null).getClass(), new IntegerCompareUI());
+        UIOperations.addMap(new NumberCompare<Float>(null, null).getClass(), new FloatCompareUI());
 
-        List<FilterEntry<?,?,?>> filters = ConfigParser.parseFilterConfig();
+        List<FilterEntry<?, ?, ?>> filters = ConfigParser.parseFilterConfig();
 
-        for (FilterEntry<?,?,?> f : filters)
+        for (FilterEntry<?, ?, ?> f : filters)
         {
             c.addFilter(f);
         }
+
+        System.out.println("Filtros carregados: "+filters.size());
 
         boolean run;
 
@@ -55,21 +67,20 @@ public class Main
         while (user)
         {
             System.out.println("Selecionar User: ");
-            for(UserRole r : UserRole.values())
+            for (UserRole r : UserRole.values())
             {
-                System.out.println("["+(r.ordinal()+1)+"] - "+r);
+                System.out.println("[" + (r.ordinal() + 1) + "] - " + r);
             }
 
             int n = sc.nextInt();
 
             if (n <= 0 || n > UserRole.values().length)
             {
-                user=false;
+                user = false;
                 run = false;
-            }
-            else
+            } else
             {
-                currentUser = UserRole.values()[n-1];
+                currentUser = UserRole.values()[n - 1];
                 options = createOpcoes(currentUser, functionList);
                 run = true;
             }

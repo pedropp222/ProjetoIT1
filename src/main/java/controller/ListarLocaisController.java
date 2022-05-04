@@ -1,5 +1,8 @@
 package controller;
 
+import controller.interfaces.ControllerLister;
+import controller.interfaces.Filterable;
+import model.Alojamento;
 import model.Companhia;
 import model.Local;
 import model.filtering.Extractor;
@@ -9,31 +12,11 @@ import model.filtering.config.FilterEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarLocaisController implements Filterable<Local>
+public class ListarLocaisController extends ControllerLister<Local>
 {
-    private final Companhia companhia;
-
-    private Local refObj;
-
     public ListarLocaisController()
     {
-        companhia = Companhia.getInstance();
-        if (companhia.getListaLocais().size() != 0)
-        {
-            refObj = companhia.getListaLocais().get(0);
-        }
-    }
-
-    public List<String> getLocais()
-    {
-        List<String> lst = new ArrayList<>();
-
-        for(Local l : companhia.getListaLocais())
-        {
-            lst.add(l.toString());
-        }
-
-        return lst;
+        super(Companhia.getInstance());
     }
 
     public <F,F2> List<Local> filtrar(Extractor<Local,F> extractor, Filter<F,F2> filtro, F2 valor, boolean negate)
@@ -44,5 +27,16 @@ public class ListarLocaisController implements Filterable<Local>
     public List<FilterEntry<Local,?,?>> getFiltros()
     {
         return companhia.getFiltersFor(refObj);
+    }
+
+    @Override
+    public Local getRefObj()
+    {
+        if (companhia.getListaLocais().size() == 0)
+        {
+            return refObj;
+        }
+        refObj = companhia.getListaLocais().get(0);
+        return refObj;
     }
 }

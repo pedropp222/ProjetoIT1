@@ -1,23 +1,25 @@
 package view.terminal;
 
-import controller.ListarPacoteController;
+import controller.interfaces.ControllerLister;
+import model.PacoteTurismo;
 import model.filtering.ui.UIOperations;
+import model.parsing.util.ControllerParserUtils;
 
 import java.util.List;
 
 public class ListarPacoteTurismoUI implements Runnable
 {
-    private final ListarPacoteController contr;
+    private final ControllerLister<PacoteTurismo> contr;
 
     public ListarPacoteTurismoUI()
     {
-        contr = new ListarPacoteController();
+        contr = ControllerParserUtils.requestListControllerOfType(PacoteTurismo.class);
     }
 
     @Override
     public void run()
     {
-        List<String> locais = contr.getLocais();
+        List<String> locais = contr.getList();
 
         if (locais.size() == 0)
         {

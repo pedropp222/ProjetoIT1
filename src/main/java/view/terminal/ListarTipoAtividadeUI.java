@@ -1,23 +1,30 @@
 package view.terminal;
 
-import controller.ListarTipoAtividadeController;
+import controller.interfaces.ControllerLister;
+import model.TipoAtividade;
 import model.filtering.ui.UIOperations;
+import model.parsing.util.ControllerParserUtils;
 
 import java.util.List;
 
 public class ListarTipoAtividadeUI implements Runnable
 {
-    ListarTipoAtividadeController cnt;
+    private final ControllerLister<TipoAtividade> cnt;
 
     public ListarTipoAtividadeUI()
     {
-        cnt = new ListarTipoAtividadeController();
+        cnt = ControllerParserUtils.requestListControllerOfType(TipoAtividade.class);
     }
 
     @Override
     public void run()
     {
-        List<String> lista = cnt.getAtividades();
+        if (cnt == null)
+        {
+            System.out.println("Nao existe controller para esta classe.");
+            return;
+        }
+        List<String> lista = cnt.getList();
 
         if (lista.size() == 0)
         {

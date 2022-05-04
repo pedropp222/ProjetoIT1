@@ -1,5 +1,6 @@
 package model;
 
+import controller.interfaces.ControllerLister;
 import model.exception.NomeInvalidoException;
 import model.factories.MegaFactory;
 import model.filtering.Extractor;
@@ -266,5 +267,4 @@ public class Companhia
 
         return filters;
     }
-
 }
