@@ -4,17 +4,12 @@ import DTO.DTOAttribute;
 import DTO.GenericDTOMapper;
 import DTO.object.AlojamentoDTO;
 import DTO.object.GenericDTO;
-import DTO.object.LocalDTO;
 import controller.CriarAlojamentoController;
 import model.Alojamento;
-import model.DiaSemana;
-import model.Local;
 import model.exception.NomeInvalidoException;
 import view.terminal.dto.UIDTOForm;
-import view.terminal.util.TerminalUtils;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 
 public class CriarAlojamentoUI implements Runnable

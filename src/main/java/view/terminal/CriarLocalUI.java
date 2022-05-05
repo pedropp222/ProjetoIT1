@@ -77,7 +77,14 @@ public class CriarLocalUI implements Runnable
         }
         else
         {
-            System.out.println("ERRO!! working DTO nao e do tipo LocalDTO, mas sim "+workingDTO.getClass());
+            if (workingDTO != null)
+            {
+                System.out.println("ERRO!! working DTO nao e do tipo LocalDTO, mas sim " + workingDTO.getClass());
+            }
+            else
+            {
+                System.out.println("ERRO !! working DTO e nulo");
+            }
         }
     }
 }

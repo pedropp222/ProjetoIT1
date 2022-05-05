@@ -4,6 +4,7 @@ import DTO.AttributeType;
 import DTO.DTOAttribute;
 import DTO.GenericDTOMapper;
 import DTO.object.AlojamentoDTO;
+import DTO.object.GenericDTO;
 import DTO.object.LocalDTO;
 import model.Alojamento;
 import model.Companhia;
@@ -21,8 +22,8 @@ import model.user.UserFunction;
 import model.user.UserRole;
 import view.terminal.util.TerminalUtils;
 
-import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.function.Function;
 
 public class Main
 {
@@ -35,26 +36,30 @@ public class Main
 
         //DTO Mapping operations
 
-        GenericDTOMapper.addMapping(Local.class,()->
+        GenericDTOMapper.addMapping(Local.class, o ->
         {
+            Local l = o instanceof Local ? (Local)o : null;
+
             List<DTOAttribute<?>> attributeList = new ArrayList<>();
-            attributeList.add(new DTOAttribute<String>("Pais", AttributeType.STRING,null));
-            attributeList.add(new DTOAttribute<String>("Cidade", AttributeType.STRING,null));
-            attributeList.add(new DTOAttribute<String>("Descricao", AttributeType.STRING,null));
+            attributeList.add(new DTOAttribute<String>("Pais", AttributeType.STRING, l==null?null:l.getPais()));
+            attributeList.add(new DTOAttribute<String>("Cidade", AttributeType.STRING, l==null?null:l.getCidade()));
+            attributeList.add(new DTOAttribute<String>("Descricao", AttributeType.STRING, l==null?null:l.getDesignacao()));
 
             return new LocalDTO(attributeList);
         });
 
-        GenericDTOMapper.addMapping(Alojamento.class,()->
+        GenericDTOMapper.addMapping(Alojamento.class, (o) ->
         {
+            Alojamento l = o instanceof Alojamento ? (Alojamento) o : null;
+
             List<DTOAttribute<?>> attributeList = new ArrayList<>();
-            attributeList.add(new DTOAttribute<String>("Designacao:", AttributeType.STRING,null));
-            attributeList.add(new DTOAttribute<Integer>("Escolha o ID do tipo de alojamento a escolher:", AttributeType.DTO,0));
-            attributeList.add(new DTOAttribute<Integer>("Escolha o ID do local a escolher: ", AttributeType.DTO,0));
-            attributeList.add(new DTOAttribute<Integer>("Numero minimo de pessoas:", AttributeType.INTEGER,0));
-            attributeList.add(new DTOAttribute<Integer>("Numero maximo de pessoas:", AttributeType.INTEGER,0));
-            attributeList.add(new DTOAttribute<DiaSemana>("Indique o numero do Dia da semana:", AttributeType.WEEKDAY,null));
-            attributeList.add(new DTOAttribute<Float>("Preco:", AttributeType.FLOAT,0f));
+            attributeList.add(new DTOAttribute<String>("Designacao:", AttributeType.STRING, l==null?null:l.getDesignacao()));
+            attributeList.add(new DTOAttribute<Integer>("Escolha o ID do tipo de alojamento a escolher:", AttributeType.DTO, 0));
+            attributeList.add(new DTOAttribute<Integer>("Escolha o ID do local a escolher: ", AttributeType.DTO, 0));
+            attributeList.add(new DTOAttribute<Integer>("Numero minimo de pessoas:", AttributeType.INTEGER, l==null?0:l.getMinPessoas()));
+            attributeList.add(new DTOAttribute<Integer>("Numero maximo de pessoas:", AttributeType.INTEGER, l==null?0:l.getMaxPessoas()));
+            attributeList.add(new DTOAttribute<DiaSemana>("Indique o numero do Dia da semana:", AttributeType.WEEKDAY, l==null?null:l.getDiaSemana()));
+            attributeList.add(new DTOAttribute<Float>("Preco:", AttributeType.FLOAT, l==null?0f:l.getPreco()));
 
             return new AlojamentoDTO(attributeList);
         });
@@ -63,7 +68,7 @@ public class Main
 
         ControllerParser.parseControllers();
 
-        System.out.println("Controllers carregados: "+ControllerParser.getListControllerListers().size());
+        System.out.println("Controllers carregados: " + ControllerParser.getListControllerListers().size());
 
         //Filtering operations
 
@@ -84,7 +89,7 @@ public class Main
             c.addFilter(f);
         }
 
-        System.out.println("Filtros carregados: "+filters.size());
+        System.out.println("Filtros carregados: " + filters.size());
 
         boolean run;
 
