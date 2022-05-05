@@ -1,8 +1,16 @@
 package view.terminal;
 
+import DTO.AttributeType;
+import DTO.DTOAttribute;
+import DTO.GenericDTOMapper;
+import DTO.object.GenericDTO;
+import DTO.object.LocalDTO;
 import controller.CriarLocalController;
+import model.Local;
 import model.exception.NomeInvalidoException;
+import view.terminal.dto.UIDTOForm;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class CriarLocalUI implements Runnable
@@ -17,56 +25,59 @@ public class CriarLocalUI implements Runnable
     @Override
     public void run()
     {
-        Scanner sc = new Scanner(System.in);
+        GenericDTO<?> workingDTO = GenericDTOMapper.convertObjectToDTO(Local.class);
 
-        System.out.print("Cidade: ");
-
-        String c = sc.nextLine();
-
-        System.out.print("Pais: ");
-
-        String p = sc.nextLine();
-
-        System.out.print("Descricao: ");
-
-        String d = sc.nextLine();
-
-        boolean sucesso;
-
-        try
+        if (workingDTO instanceof LocalDTO)
         {
-            sucesso = contr.criarLocal(c,p,d);
-        }
-        catch (NomeInvalidoException e)
-        {
-            System.out.println("Nao foi possivel criar local: "+e.getMessage());
-            return;
-        }
+            Scanner sc = new Scanner(System.in);
+            Iterator<DTOAttribute<?>> it = workingDTO.getAttributeList();
 
-        if (sucesso)
-        {
-            System.out.print("Local criado com sucesso. Guardar? (Y/N)");
-            String ch = sc.nextLine();
-
-            if (ch.equalsIgnoreCase("Y"))
+            if (!UIDTOForm.populateDTOValues(sc,it))
             {
-                if (contr.gravarLocal())
+                return;
+            }
+
+            boolean sucesso;
+
+            try
+            {
+                sucesso = contr.criarLocal((LocalDTO) workingDTO);
+            }
+            catch (NomeInvalidoException e)
+            {
+                System.out.println("Nao foi possivel criar local: "+e.getMessage());
+                return;
+            }
+
+            if (sucesso)
+            {
+                System.out.print("Local criado com sucesso. Guardar? (Y/N)");
+                String ch = sc.nextLine();
+
+                if (ch.equalsIgnoreCase("Y"))
                 {
-                    System.out.println("Operacao concluida com sucesso.");
+                    if (contr.gravarLocal())
+                    {
+                        System.out.println("Operacao concluida com sucesso.");
+                    }
+                    else
+                    {
+                        System.out.println("Nao foi possivel guardar local, pois ja existe.");
+                    }
                 }
                 else
                 {
-                    System.out.println("Nao foi possivel guardar local, pois ja existe.");
+                    System.out.println("Operacao cancelada.");
                 }
             }
             else
             {
-                System.out.println("Operacao cancelada.");
+                System.out.println("Nao foi possivel criar local, pois ja existe.");
             }
         }
         else
         {
-            System.out.println("Nao foi possivel criar local, pois ja existe.");
+            System.out.println("ERRO!! working DTO nao e do tipo LocalDTO, mas sim "+workingDTO.getClass());
         }
     }
 }

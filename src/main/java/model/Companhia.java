@@ -1,6 +1,10 @@
 package model;
 
-import controller.interfaces.ControllerLister;
+import DTO.AttributeType;
+import DTO.DTOAttribute;
+import DTO.object.AlojamentoDTO;
+import DTO.object.GenericDTO;
+import DTO.object.LocalDTO;
 import model.exception.NomeInvalidoException;
 import model.factories.MegaFactory;
 import model.filtering.Extractor;
@@ -8,6 +12,7 @@ import model.filtering.Filter;
 import model.filtering.config.FilterEntry;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Companhia
@@ -47,6 +52,39 @@ public class Companhia
     public Local criarLocal(String cidade, String pais, String desc) throws NomeInvalidoException
     {
         return factory.criarLocal(cidade, pais, desc);
+    }
+
+    public Local criarLocal(LocalDTO l) throws NomeInvalidoException
+    {
+        return factory.criarLocal(findType(AttributeType.STRING,l,0), findType(AttributeType.STRING,l,1), findType(AttributeType.STRING,l,2));
+    }
+
+    public Alojamento criarAlojamento(AlojamentoDTO dto) throws NomeInvalidoException, IllegalArgumentException
+    {
+        return factory.criarAlojamento(findType(AttributeType.STRING,dto,0), getListaTipoAlojamento().get(findType(AttributeType.DTO,dto,0)), getListaLocais().get(findType(AttributeType.DTO,dto,1)), findType(AttributeType.INTEGER,dto,0), findType(AttributeType.INTEGER,dto,1), findType(AttributeType.WEEKDAY,dto,0), findType(AttributeType.FLOAT,dto,0));
+    }
+
+    private <T> T findType(AttributeType attrType, GenericDTO<?> g, int index)
+    {
+        Iterator<DTOAttribute<?>> it = g.getAttributeList();
+        int ind = 0;
+        while (it.hasNext())
+        {
+            DTOAttribute<?> attr = it.next();
+            if (attr.getType() == attrType)
+            {
+                if (ind == index)
+                {
+                    return (T) attr.getValue();
+                }
+                else
+                {
+                    ind++;
+                }
+            }
+        }
+
+        return (T) Integer.valueOf(-1);
     }
 
     public TipoAlojamento criarTipoAlojamento(String desc) throws NomeInvalidoException

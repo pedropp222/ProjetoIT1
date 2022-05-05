@@ -1,5 +1,6 @@
 package controller;
 
+import DTO.object.AlojamentoDTO;
 import model.*;
 import model.exception.NomeInvalidoException;
 
@@ -22,6 +23,14 @@ public class CriarAlojamentoController
 
         return companhia.validarAlojamento(aloj);
     }
+
+    public boolean criarAlojamento(AlojamentoDTO dto)
+    {
+        aloj = companhia.criarAlojamento(dto);
+
+        return companhia.validarAlojamento(aloj);
+    }
+
 
     public List<String> getTiposAlojamento()
     {

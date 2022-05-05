@@ -1,10 +1,20 @@
 package view.terminal;
 
+import DTO.DTOAttribute;
+import DTO.GenericDTOMapper;
+import DTO.object.AlojamentoDTO;
+import DTO.object.GenericDTO;
+import DTO.object.LocalDTO;
 import controller.CriarAlojamentoController;
+import model.Alojamento;
 import model.DiaSemana;
+import model.Local;
 import model.exception.NomeInvalidoException;
+import view.terminal.dto.UIDTOForm;
 import view.terminal.util.TerminalUtils;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class CriarAlojamentoUI implements Runnable
@@ -67,72 +77,33 @@ public class CriarAlojamentoUI implements Runnable
 
     private boolean preencherValores(Scanner sc) throws NumberFormatException, ArrayIndexOutOfBoundsException
     {
-        System.out.print("Designacao: ");
-        String desg = sc.nextLine();
+        GenericDTO<?> workingDTO = GenericDTOMapper.convertObjectToDTO(Alojamento.class);
 
-       if(!TerminalUtils.listarLista(contr.getTiposAlojamento()))
-       {
-           System.out.println("Nao existem tipos de alojamentos registados.");
-           return false;
-       }
-
-        System.out.print("Escolha o ID do tipo de alojamento a escolher: ");
-        int esc = sc.nextInt();
-
-        if (!contr.isTipoAlojamentoValido(esc))
+        if (workingDTO instanceof AlojamentoDTO)
         {
-            System.out.println("O ID do tipo que introduziu nao e valido.");
-            return false;
-        }
+            Iterator<DTOAttribute<?>> it = workingDTO.getAttributeList();
 
-        if (!TerminalUtils.listarLista(contr.getLocais()))
-        {
-            System.out.println("Nao existem locais registados");
-            return false;
-        }
-
-        System.out.print("Escolha o ID do local a escolher: ");
-        int loc = sc.nextInt();
-
-        if (!contr.isLocalValido(loc))
-        {
-            System.out.println("O ID do local que introduziu nao e valido.");
-        }
-
-        System.out.print("Numero minimo de pessoas: ");
-
-        int mn = sc.nextInt();
-
-        System.out.print("Numero maximo de pessoas: ");
-
-        int max = sc.nextInt();
-
-        TerminalUtils.listarDiasSemana();
-
-        System.out.print("Indique o numero do Dia da semana: ");
-
-        int sem = sc.nextInt();
-
-        DiaSemana ds = DiaSemana.values()[sem];
-
-        System.out.print("Preco: ");
-
-        float preco = sc.nextFloat();
-
-        try
-        {
-            if (!contr.criarAlojamento(desg, esc, loc, mn, max, ds, preco))
+            if (!UIDTOForm.populateDTOValues(sc, it,contr.getTiposAlojamento(),contr.getLocais()))
             {
-                System.out.println("Nao foi possivel validar alojamento.");
                 return false;
             }
-        }
-        catch (NomeInvalidoException | IllegalArgumentException e)
-        {
-            System.out.println("Erro ao criar alojamento: "+e.getMessage());
-            return false;
-        }
 
-        return true;
+            try
+            {
+                if (!contr.criarAlojamento((AlojamentoDTO) workingDTO))
+                {
+                    System.out.println("Nao foi possivel validar alojamento.");
+                    return false;
+                }
+            }
+            catch (NomeInvalidoException | IllegalArgumentException e)
+            {
+                System.out.println("Erro ao criar alojamento: "+e.getMessage());
+                return false;
+            }
+
+            return true;
+        }
+        return false;
     }
 }

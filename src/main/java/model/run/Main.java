@@ -1,6 +1,14 @@
 package model.run;
 
+import DTO.AttributeType;
+import DTO.DTOAttribute;
+import DTO.GenericDTOMapper;
+import DTO.object.AlojamentoDTO;
+import DTO.object.LocalDTO;
+import model.Alojamento;
 import model.Companhia;
+import model.DiaSemana;
+import model.Local;
 import model.factories.MegaFactory;
 import model.filtering.config.FilterEntry;
 import model.filtering.config.NumberCompare;
@@ -24,6 +32,32 @@ public class Main
 
         //TODO: remover isto
         TerminalUtils.criarDadosTeste();
+
+        //DTO Mapping operations
+
+        GenericDTOMapper.addMapping(Local.class,()->
+        {
+            List<DTOAttribute<?>> attributeList = new ArrayList<>();
+            attributeList.add(new DTOAttribute<String>("Pais", AttributeType.STRING,null));
+            attributeList.add(new DTOAttribute<String>("Cidade", AttributeType.STRING,null));
+            attributeList.add(new DTOAttribute<String>("Descricao", AttributeType.STRING,null));
+
+            return new LocalDTO(attributeList);
+        });
+
+        GenericDTOMapper.addMapping(Alojamento.class,()->
+        {
+            List<DTOAttribute<?>> attributeList = new ArrayList<>();
+            attributeList.add(new DTOAttribute<String>("Designacao:", AttributeType.STRING,null));
+            attributeList.add(new DTOAttribute<Integer>("Escolha o ID do tipo de alojamento a escolher:", AttributeType.DTO,0));
+            attributeList.add(new DTOAttribute<Integer>("Escolha o ID do local a escolher: ", AttributeType.DTO,0));
+            attributeList.add(new DTOAttribute<Integer>("Numero minimo de pessoas:", AttributeType.INTEGER,0));
+            attributeList.add(new DTOAttribute<Integer>("Numero maximo de pessoas:", AttributeType.INTEGER,0));
+            attributeList.add(new DTOAttribute<DiaSemana>("Indique o numero do Dia da semana:", AttributeType.WEEKDAY,null));
+            attributeList.add(new DTOAttribute<Float>("Preco:", AttributeType.FLOAT,0f));
+
+            return new AlojamentoDTO(attributeList);
+        });
 
         //Controller operations
 
